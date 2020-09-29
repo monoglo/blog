@@ -4,21 +4,6 @@
     <scroll-to-top></scroll-to-top>
     <v-main>
       <!-- <HelloWorld/> -->
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
       <router-view />
     </v-main>
   </v-app>
@@ -35,9 +20,19 @@ export default {
     'blog-navbar': TheNavbar,
     'scroll-to-top': TheFloatingButton
   },
-
   data: () => ({
     fab: false
   })
 }
 </script>
+
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
