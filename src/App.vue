@@ -3,22 +3,6 @@
     <blog-navbar></blog-navbar>
     <scroll-to-top></scroll-to-top>
     <v-main>
-      <!-- <HelloWorld/> -->
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
-      <h1>wtf</h1>
       <router-view />
     </v-main>
   </v-app>
