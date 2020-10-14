@@ -1,8 +1,7 @@
 <template>
   <div>
     <v-navigation-drawer app permanent>
-      <v-list class="primary">
-
+      <v-list class="pink accent-2">
         <v-list-item class="px-2">
           <v-list-item-avatar>
             <v-img
@@ -46,7 +45,16 @@
         </v-list-item>
       </v-list>
       <v-footer fixed padless>
-        <v-card flat tile width="100%" class="primary text-center">
+        <v-card flat tile v-ripple width="100%" class="pink accent-2 text-center">
+          <v-toolbar>
+            <v-switch
+              v-model="$vuetify.theme.dark"
+              inset
+              hide-details
+              color="dark"
+            ></v-switch>
+            夜间模式
+          </v-toolbar>
           <v-card-text class="white--text">
             {{ new Date().getFullYear() }} — <strong>rankofmatrix.com</strong>
           </v-card-text>
@@ -54,7 +62,7 @@
       </v-footer>
     </v-navigation-drawer>
 
-    <v-app-bar app dense elevate-on-scroll color="red">
+    <v-app-bar app dense elevate-on-scroll color="primary">
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
     </v-app-bar>
   </div>
