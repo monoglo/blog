@@ -17,7 +17,7 @@
                 >
 
                 <v-card-actions>
-                  <v-btn text @click.stop="$router.push({path: 'article'})"> Listen Now </v-btn>
+                  <v-btn text @click.stop="$router.push({path: '/article'})"> Listen Now </v-btn>
                 </v-card-actions>
               </v-card>
             </v-col>

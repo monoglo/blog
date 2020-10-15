@@ -25,19 +25,19 @@
       <v-divider></v-divider>
 
       <v-list nav dense>
-        <v-list-item link>
+        <v-list-item link @click.stop="$router.push({path: '/'})">
           <v-list-item-icon>
             <v-icon>mdi-folder</v-icon>
           </v-list-item-icon>
           <v-list-item-title>首页</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link @click.stop="$router.push({path: '/tag'})">
           <v-list-item-icon>
             <v-icon>mdi-account-multiple</v-icon>
           </v-list-item-icon>
           <v-list-item-title>标签</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link @click.stop="$router.push({path: '/archive'})">
           <v-list-item-icon>
             <v-icon>mdi-star</v-icon>
           </v-list-item-icon>

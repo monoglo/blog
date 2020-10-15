@@ -27,6 +27,33 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "articlepage" */ '../views/ArticlePage.vue')
+  },
+  {
+    path: '/article',
+    name: 'ArticlePage',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "articlepage" */ '../views/ArticlePage.vue')
+  },
+  {
+    path: '/tag',
+    name: 'TagList',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "taglist" */ '../views/TagList.vue')
+  },
+  {
+    path: '/archive',
+    name: 'ArchiveList',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "archivelist" */ '../views/ArchiveList.vue')
   }
 ]
 

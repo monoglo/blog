@@ -9,8 +9,8 @@
               src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
             >
               <v-app-bar flat color="rgba(0, 0, 0, 0)" class="mt-6">
-                <v-btn color="white" icon>
-                  <v-icon @click.stop="$router.go(-1)">mdi-arrow-left</v-icon>
+                <v-btn color="white" icon @click.stop="$router.go(-1)">
+                  <v-icon>mdi-arrow-left</v-icon>
                 </v-btn>
 
                 <v-toolbar-title class="title white--text pl-0">
