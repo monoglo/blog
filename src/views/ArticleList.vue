@@ -3,11 +3,12 @@
     <v-container>
       <v-row dense>
         <v-col cols="9">
+
           <v-row dense>
             <v-col cols="12">
               <v-card color="#385F73" dark>
                 <v-card-title class="headline">
-                  Unlimited music now
+                  滕王阁序
                 </v-card-title>
 
                 <v-card-subtitle
@@ -16,7 +17,7 @@
                 >
 
                 <v-card-actions>
-                  <v-btn text> Listen Now </v-btn>
+                  <v-btn text @click.stop="$router.push({path: 'article'})"> Listen Now </v-btn>
                 </v-card-actions>
               </v-card>
             </v-col>

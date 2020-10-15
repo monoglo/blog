@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer app permanent>
+    <v-navigation-drawer app v-model="drawer">
       <v-list class="pink accent-2">
         <v-list-item class="px-2">
           <v-list-item-avatar>
@@ -63,7 +63,7 @@
     </v-navigation-drawer>
 
     <v-app-bar app dense elevate-on-scroll color="primary">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     </v-app-bar>
   </div>
 </template>
@@ -72,7 +72,7 @@
 export default {
   name: 'Navbar',
   data: () => ({
-    fab: false
+    drawer: true
   })
 }
 </script>

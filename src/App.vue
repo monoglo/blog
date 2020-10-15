@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <blog-navbar></blog-navbar>
+    <keep-alive>
+      <blog-navbar></blog-navbar>
+    </keep-alive>
     <scroll-to-top></scroll-to-top>
     <v-main>
       <router-view />

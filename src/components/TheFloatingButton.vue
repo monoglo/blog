@@ -8,19 +8,13 @@
       </v-btn>
     </template>
     <!-- 小按钮组 -->
-    <v-btn fab small><v-icon>mdi-account</v-icon></v-btn>
+    <v-btn fab small @click.stop="$vuetify.theme.dark = !$vuetify.theme.dark"
+      ><v-icon>mdi-theme-light-dark</v-icon></v-btn
+    >
     <v-btn fab small><v-icon>mdi-account</v-icon></v-btn>
     <v-btn fab small><v-icon>mdi-account</v-icon></v-btn>
   </v-speed-dial>
-  <v-btn
-    fab
-    color="primary"
-    fixed
-    bottom
-    right
-    @click="toTop()"
-    v-else
-  >
+  <v-btn fab color="primary" fixed bottom right @click="toTop()" v-else>
     <v-icon>mdi-keyboard-caps</v-icon>
   </v-btn>
 </template>
