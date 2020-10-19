@@ -110,8 +110,9 @@
                 name="input-7-4"
                 label="在此输入正文..."
                 class="ms-5 me-2"
-                height="280px"
+                height="300px"
                 no-resize
+                hide-details
               ></v-textarea>
             </v-card-text>
             <v-card-actions>
