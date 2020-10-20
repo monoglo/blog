@@ -33,7 +33,7 @@
                 </v-menu>
               </v-app-bar>
               <v-card-title class="white--text mt-16">
-                <p class="ml-3 font-weight-medium text-h4">滕王阁序</p>
+                <p class="ml-3 font-weight-medium text-h4">{{ article.title }}</p>
               </v-card-title>
             </v-parallax>
             <v-card-subtitle>
@@ -84,7 +84,30 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      article: {
+        title: null,
+        text: null
+      }
+    }
+  },
+  created() {
+    this.getArticleInfo()
+  },
+  mounted() {
+    this.$vuetify.goTo(0)
+  },
+  methods: {
+    getArticleInfo() {
+      this.$axios.get('http://localhost:8081/articles/aid/' + this.$route.params.aid).then(response => {
+        console.info(response.data.data)
+        this.article = response.data.data
+      })
+    }
+  }
+}
 </script>
 
 <style></style>

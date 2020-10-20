@@ -11,7 +11,7 @@
     <v-btn fab small @click.stop="$vuetify.theme.dark = !$vuetify.theme.dark"
       ><v-icon>mdi-theme-light-dark</v-icon></v-btn
     >
-    <v-btn fab small><v-icon>mdi-account</v-icon></v-btn>
+    <v-btn fab small @click.stop="$router.push({ path: '/create/article' })"><v-icon>mdi-book-plus-multiple-outline</v-icon></v-btn>
     <v-btn fab small><v-icon>mdi-account</v-icon></v-btn>
   </v-speed-dial>
   <v-btn fab color="primary" fixed bottom right @click="toTop()" v-else>

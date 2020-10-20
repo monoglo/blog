@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <keep-alive>
+    <!-- <keep-alive> -->
       <blog-navbar></blog-navbar>
-    </keep-alive>
+    <!-- </keep-alive> -->
     <scroll-to-top></scroll-to-top>
     <v-main>
       <router-view />
