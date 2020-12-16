@@ -33,15 +33,23 @@
                 </v-menu>
               </v-app-bar>
               <v-card-title class="white--text mt-16">
-                <p class="ml-3 font-weight-medium text-h4">{{ article.title }}</p>
+                <p class="ml-3 font-weight-medium text-h4">
+                  {{ article.title }}
+                </p>
               </v-card-title>
             </v-parallax>
             <v-card-subtitle>
-              Listen to your favorite artists and albums whenever and wherever,
-              online and offline.
+              上次编辑于 {{ moment.utc(article.lastEditTime).fromNow() }} | 创建于{{ moment.utc(article.createTime).format('lll') }}
             </v-card-subtitle>
             <v-divider></v-divider>
             <v-card-text>
+              <p
+                v-for="paragraph in article.paragraph"
+                v-bind:key="paragraph"
+                class="text-body-1"
+              >
+                {{ paragraph }}
+              </p>
               <p class="text-body-1">
                 豫章故郡，洪都新府。星分翼轸，地接衡庐。襟三江而带五湖，控蛮荆而引瓯越。物华天宝，龙光射牛斗之墟；人杰地灵，徐孺下陈蕃之榻。雄州雾列，俊采星驰。台隍枕夷夏之交，宾主尽东南之美。都督阎公之雅望，棨戟遥临；宇文新州之懿范，襜帷暂驻。十旬休假，胜友如云；千里逢迎，高朋满座。腾蛟起凤，孟学士之词宗；紫电青霜，王将军之武库。家君作宰，路出名区；童子何知，躬逢胜饯。
               </p>
@@ -84,27 +92,35 @@
 </template>
 
 <script>
+import * as moment from 'moment'
+moment.locale('zh-cn')
+
 export default {
   data() {
     return {
       article: {
         title: null,
-        text: null
+        text: null,
+        paragraph: []
       }
     }
   },
   created() {
     this.getArticleInfo()
+    console.info(this.$route)
   },
   mounted() {
     this.$vuetify.goTo(0)
   },
   methods: {
     getArticleInfo() {
-      this.$axios.get('http://localhost:8081/articles/aid/' + this.$route.params.aid).then(response => {
-        console.info(response.data.data)
-        this.article = response.data.data
-      })
+      this.$axios
+        .get('api/articles/aid/' + this.$route.params.aid)
+        .then(response => {
+          console.info(response.data.data)
+          this.article = response.data.data
+          this.article.paragraph = this.article.text.split(/[\s\n]/)
+        })
     }
   }
 }
