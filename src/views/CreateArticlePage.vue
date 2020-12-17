@@ -42,6 +42,7 @@
             </v-parallax>
             <v-card-subtitle>
               <v-chip class="ma-2" close @click:close="chip1 = false">
+                <v-icon left> mdi-label </v-icon>
                 Closable
               </v-chip>
 
@@ -75,10 +76,27 @@
               >
                 Complete
               </v-chip>
-              <v-chip class="ma-2" color="pink" label text-color="white">
-                <v-icon left> mdi-label </v-icon>
-                Tags
-              </v-chip>
+              <tag-chip
+                color="orange darken-3"
+                :selected.sync="labelSelected"
+                icon="mdi-language-java"
+                text="Java"
+              >
+              </tag-chip>
+              <tag-chip
+                color="yellow darken-1"
+                :selected.sync="labelSelected"
+                icon="mdi-language-javascript"
+                text="javascript"
+              >
+              </tag-chip>
+              <tag-chip
+                color="cyan accent-3"
+                :selected.sync="labelSelected"
+                icon="mdi-language-go"
+                text="go"
+              >
+              </tag-chip>
               <v-menu bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn icon v-bind="attrs" v-on="on">
@@ -116,7 +134,7 @@
               ></v-textarea>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="primary" depressed @click="reserve" class="ms-7">
+              <v-btn color="primary" depressed @click="submit" class="ms-7">
                 提交
               </v-btn>
             </v-card-actions>
@@ -128,7 +146,11 @@
 </template>
 
 <script>
+import TagChip from '@/components/TagChip.vue'
 export default {
+  components: {
+    'tag-chip': TagChip
+  },
   data() {
     return {
       items: [
@@ -155,7 +177,8 @@ export default {
       ],
       loading: false,
       search: '',
-      selected: []
+      selected: [],
+      labelSelected: false
     }
   },
   computed: {
@@ -181,6 +204,11 @@ export default {
       }
 
       return selections
+    }
+  },
+  methods: {
+    submit() {
+      console.info('submit')
     }
   }
 }

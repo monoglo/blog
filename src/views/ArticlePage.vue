@@ -39,7 +39,8 @@
               </v-card-title>
             </v-parallax>
             <v-card-subtitle>
-              上次编辑于 {{ moment.utc(article.lastEditTime).fromNow() }} | 创建于{{ moment.utc(article.createTime).format('lll') }}
+              上次编辑于 {{ moment.utc(article.lastEditTime).fromNow() }} |
+              创建于{{ moment.utc(article.createTime).format('lll') }}
             </v-card-subtitle>
             <v-divider></v-divider>
             <v-card-text>
@@ -102,25 +103,51 @@ export default {
         title: null,
         text: null,
         paragraph: []
-      }
+      },
+      readMark: true
     }
   },
   created() {
     this.getArticleInfo()
-    console.info(this.$route)
+    // console.info(this.$route)
   },
   mounted() {
     this.$vuetify.goTo(0)
+    this.scroll()
   },
   methods: {
     getArticleInfo() {
       this.$axios
         .get('api/articles/aid/' + this.$route.params.aid)
         .then(response => {
-          console.info(response.data.data)
+          // console.info(response.data.data)
           this.article = response.data.data
           this.article.paragraph = this.article.text.split(/[\s\n]/)
         })
+    },
+    scroll() {
+      window.onscroll = () => {
+        // console.info(window.pageYOffset)
+        // console.info(window.innerHeight)
+        // console.info(document.body.offsetHeight)
+        const bottomOfWindow =
+          window.pageYOffset + window.innerHeight >=
+          document.body.offsetHeight - 100
+
+        if (bottomOfWindow) {
+          this.read() // replace it with your code
+        }
+      }
+    },
+    read() {
+      if (this.readMark) {
+        this.readMark = !this.readMark
+        this.$axios
+          .post('api/articles/aid/' + this.$route.params.aid + '/read')
+          .then(response => {
+            // console.info(response)
+          })
+      }
     }
   }
 }

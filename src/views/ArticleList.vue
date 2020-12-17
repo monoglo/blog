@@ -11,7 +11,7 @@
                 </v-card-title>
 
                 <v-card-subtitle>
-                  {{ article.text }}
+                  阅读 {{ article.clickAmount }}
                 </v-card-subtitle>
 
                 <v-card-actions>
@@ -21,7 +21,7 @@
                       $router.push({ path: '/article/' + article.aid })
                     "
                   >
-                    Listen Now
+                    Read
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -66,7 +66,6 @@ export default {
   created() {
     // console.info(this.$store.state.count)
     this.getArticleList()
-    console.info(process.env.baseUrl)
   },
   methods: {
     addCount() {
