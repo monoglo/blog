@@ -33,7 +33,7 @@
         </v-list-item>
         <v-list-item link @click.stop="$router.push({path: '/tag'})">
           <v-list-item-icon>
-            <v-icon>mdi-account-multiple</v-icon>
+            <v-icon>mdi-tag-multiple</v-icon>
           </v-list-item-icon>
           <v-list-item-title>标签</v-list-item-title>
         </v-list-item>

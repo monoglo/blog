@@ -1,53 +1,57 @@
 <template>
-  <div class="pa-1">
-    <v-container>
-      <v-row dense>
-        <v-col cols="9">
-          <v-row dense v-for="article in article_list" :key="article.aid">
-            <v-col cols="12">
-              <v-card color="#385F73" dark>
-                <v-card-title class="headline">
-                  {{ article.title }}
-                </v-card-title>
+  <keep-alive>
+    <div class="pa-1">
+      <v-container>
+        <v-row dense>
+          <v-col cols="9">
+            <v-row dense v-for="article in article_list" :key="article.aid">
+              <v-col cols="12">
+                <v-card color="#385F73" dark>
+                  <v-card-title class="headline">
+                    {{ article.title }}
+                  </v-card-title>
 
-                <v-card-subtitle>
-                  阅读 {{ article.clickAmount }}
-                </v-card-subtitle>
+                  <v-card-subtitle>
+                    阅读 {{ article.clickAmount }}
+                  </v-card-subtitle>
 
-                <v-card-actions>
-                  <v-btn
-                    text
-                    @click.stop="
-                      $router.push({ path: '/article/' + article.aid })
-                    "
-                  >
-                    Read
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-col>
+                  <v-card-actions>
+                    <v-btn
+                      text
+                      @click.stop="
+                        $router.push({ path: '/article/' + article.aid })
+                      "
+                    >
+                      Read
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-col>
 
-        <v-divider vertical class="mx-2"></v-divider>
+          <v-divider vertical class="mx-2"></v-divider>
 
-        <v-col cols="2">
-          <v-card color="#385F73" dark fixed>
-            <v-card-title class="headline"> Unlimited music now </v-card-title>
+          <v-col cols="2">
+            <v-card color="#385F73" dark fixed>
+              <v-card-title class="headline">
+                Unlimited music now
+              </v-card-title>
 
-            <v-card-subtitle>
-              Listen to your favorite artists and albums whenever and wherever,
-              online and offline.
+              <v-card-subtitle>
+                Listen to your favorite artists and albums whenever and
+                wherever, online and offline.
               </v-card-subtitle>
 
-            <v-card-actions>
-              <v-btn text> Listen Now </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+              <v-card-actions>
+                <v-btn text> Listen Now </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
+  </keep-alive>
 </template>
 
 <script>
@@ -63,7 +67,7 @@ export default {
       article_list: {}
     }
   },
-  created() {
+  mounted() {
     // console.info(this.$store.state.count)
     this.getArticleList()
   },
@@ -72,7 +76,7 @@ export default {
       this.$store.commit('addCount')
     },
     getArticleList() {
-      this.$axios.get('api/articles/').then(response => {
+      this.$axios.get('api/articles/visible').then(response => {
         console.info(response.data.data)
         this.article_list = response.data.data
       })

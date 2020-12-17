@@ -14,7 +14,7 @@
                 </v-btn>
 
                 <v-toolbar-title class="title white--text pl-0">
-                  Article
+                  Create Article
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
 
@@ -37,89 +37,20 @@
                   label="标题"
                   dark
                   class="ml-3 font-weight-medium text-h5"
+                  v-model="title"
                 ></v-text-field>
               </v-card-title>
             </v-parallax>
             <v-card-subtitle>
-              <v-chip class="ma-2" close @click:close="chip1 = false">
-                <v-icon left> mdi-label </v-icon>
-                Closable
-              </v-chip>
-
-              <v-chip
-                class="ma-2"
-                close
-                color="red"
-                text-color="white"
-                @click:close="chip2 = false"
-              >
-                Remove
-              </v-chip>
-
-              <v-chip
-                class="ma-2"
-                close
-                color="green"
-                outlined
-                @click:close="chip3 = false"
-              >
-                Success
-              </v-chip>
-
-              <v-chip
-                class="ma-2"
-                close
-                color="orange"
-                label
-                outlined
-                @click:close="chip4 = false"
-              >
-                Complete
-              </v-chip>
               <tag-chip
-                color="orange darken-3"
-                :selected.sync="labelSelected"
-                icon="mdi-language-java"
-                text="Java"
+                v-for="tag in tags"
+                v-bind:key="tag.tagId"
+                :color="tag.tagColor"
+                :selected.sync="tag.selected"
+                :icon="tag.tagIcon"
+                :text="tag.tagName"
               >
               </tag-chip>
-              <tag-chip
-                color="yellow darken-1"
-                :selected.sync="labelSelected"
-                icon="mdi-language-javascript"
-                text="javascript"
-              >
-              </tag-chip>
-              <tag-chip
-                color="cyan accent-3"
-                :selected.sync="labelSelected"
-                icon="mdi-language-go"
-                text="go"
-              >
-              </tag-chip>
-              <v-menu bottom>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
-                    <v-icon>mdi-tag-plus</v-icon>
-                  </v-btn>
-                </template>
-
-                <v-list>
-                  <template v-for="item in categories">
-                    <v-list-item
-                      v-if="!selected.includes(item)"
-                      :key="item.text"
-                      :disabled="loading"
-                      @click="selected.push(item)"
-                    >
-                      <v-list-item-avatar>
-                        <v-icon :disabled="loading" v-text="item.icon"></v-icon>
-                      </v-list-item-avatar>
-                      <v-list-item-title v-text="item.text"></v-list-item-title>
-                    </v-list-item>
-                  </template>
-                </v-list>
-              </v-menu>
             </v-card-subtitle>
             <v-divider></v-divider>
             <v-card-text>
@@ -131,6 +62,7 @@
                 height="300px"
                 no-resize
                 hide-details
+                v-model="text"
               ></v-textarea>
             </v-card-text>
             <v-card-actions>
@@ -153,62 +85,57 @@ export default {
   },
   data() {
     return {
-      items: [
-        {
-          text: 'Nature',
-          icon: 'mdi-nature'
-        },
-        {
-          text: 'Nightlife',
-          icon: 'mdi-glass-wine'
-        },
-        {
-          text: 'November',
-          icon: 'mdi-calendar-range'
-        },
-        {
-          text: 'Portland',
-          icon: 'mdi-map-marker'
-        },
-        {
-          text: 'Biking',
-          icon: 'mdi-bike'
-        }
-      ],
-      loading: false,
-      search: '',
-      selected: [],
-      labelSelected: false
+      title: '',
+      tags: [],
+      text: ''
     }
   },
-  computed: {
-    allSelected() {
-      return this.selected.length === this.items.length
-    },
-    categories() {
-      const search = this.search.toLowerCase()
-
-      if (!search) return this.items
-
-      return this.items.filter(item => {
-        const text = item.text.toLowerCase()
-
-        return text.indexOf(search) > -1
-      })
-    },
-    selections() {
-      const selections = []
-
-      for (const selection of this.selected) {
-        selections.push(selection)
-      }
-
-      return selections
-    }
+  computed: {},
+  mounted() {
+    this.getAllTags()
   },
   methods: {
     submit() {
-      console.info('submit')
+      this.$axios
+        .post('api/articles/', {
+          authorId: 1,
+          title: this.title,
+          text: this.text
+        })
+        .then(response => {
+          console.info(response.data.data.aid)
+          this.$axios
+            .put(
+              'api/articles/aid/' + response.data.data.aid + '/add/tags',
+              this.selectedTags()
+            )
+            .then(response => {
+              console.info(response)
+            })
+        })
+      // console.info('submit')
+      // console.info(this.selectedTags())
+      // console.info(this.text)
+    },
+    getAllTags() {
+      this.$axios.get('api/tags/').then(response => {
+        if (response.status === 200) {
+          this.tags = response.data.data
+          this.tags.forEach(tag => {
+            tag.selected = false
+          })
+          console.info(this.tags)
+        }
+      })
+    },
+    selectedTags() {
+      const selectedTags = []
+      this.tags.forEach(tag => {
+        if (tag.selected === true) {
+          selectedTags.push(tag.tagId)
+        }
+      })
+      return selectedTags
     }
   }
 }
