@@ -51,7 +51,7 @@
               >
                 <v-icon left> {{ tag.tagIcon }} </v-icon>
                 {{ tag.tagName }}
-                <v-avatar right :class="tag.tagColor + 'darken'"> {{ tag.articleAmount }} </v-avatar>
+                <v-avatar right :class="tag.tagColor + ' darken-1'"> {{ tag.articleAmount }} </v-avatar>
               </v-chip>
             </v-card-text>
           </v-card>
