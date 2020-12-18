@@ -49,6 +49,7 @@
                 :selected.sync="tag.selected"
                 :icon="tag.tagIcon"
                 :text="tag.tagName"
+                :articleAmount="tag.articleAmount"
               >
               </tag-chip>
             </v-card-subtitle>

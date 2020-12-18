@@ -11,6 +11,7 @@
   >
     <v-icon left> {{ icon }} </v-icon>
     {{ text }}
+    <v-avatar right :class="color + ' darken-1 white--text'"> {{ articleAmount }} </v-avatar>
   </v-chip>
 </template>
 
@@ -34,6 +35,10 @@ export default {
     text: {
       type: String,
       default: ''
+    },
+    articleAmount: {
+      type: Number,
+      default: 0
     }
   },
   data: () => ({
