@@ -8,7 +8,7 @@
               height="200"
               src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
             >
-              <v-app-bar flat color="rgba(0, 0, 0, 0)" class="mt-6">
+              <v-app-bar flat color="rgba(0, 0, 0, 0)">
                 <v-btn color="white" icon @click.stop="$router.go(-1)">
                   <v-icon>mdi-arrow-left</v-icon>
                 </v-btn>
@@ -32,8 +32,8 @@
                   </v-list>
                 </v-menu>
               </v-app-bar>
-              <v-card-title class="white--text mt-16">
-                <p class="ml-3 font-weight-medium text-h4">
+              <v-card-title>
+                <p class="ml-3 font-weight-medium text-h4 white--text">
                   {{ article.title }}
                 </p>
               </v-card-title>

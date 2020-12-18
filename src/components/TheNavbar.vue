@@ -62,8 +62,8 @@
       </v-footer>
     </v-navigation-drawer>
 
-    <v-app-bar app dense elevate-on-scroll color="primary">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-app-bar app dense elevate-on-scroll color="indigo">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="white"></v-app-bar-nav-icon>
     </v-app-bar>
   </div>
 </template>

@@ -4,49 +4,60 @@
       <v-container>
         <v-row dense>
           <v-col cols="9">
-            <v-row dense v-for="article in article_list" :key="article.aid">
-              <v-col cols="12">
+            <!-- <v-row dense v-for="article in article_list" :key="article.aid">
+                  <v-col cols="12"> -->
+            <v-card
+              color="#385F73"
+              class="my-2"
+              dark
+              v-for="article in article_list"
+              :key="article.aid"
+            >
+              <v-card-title class="headline">
+                {{ article.title }}
+              </v-card-title>
+
+              <v-card-subtitle>
+                阅读 {{ article.clickAmount }}
+              </v-card-subtitle>
+
+              <v-card-actions>
+                <v-btn
+                  text
+                  @click.stop="
+                    $router.push({ path: '/article/' + article.aid })
+                  "
+                >
+                  Read
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+            <!-- </v-col>
+                </v-row> -->
+          </v-col>
+
+          <v-col cols="3">
+            <v-row>
+              <v-col cols="1">
+                <v-divider vertical class="mx-2"></v-divider>
+              </v-col>
+              <v-col cols="11">
                 <v-card color="#385F73" dark>
                   <v-card-title class="headline">
-                    {{ article.title }}
+                    Unlimited music now
                   </v-card-title>
 
                   <v-card-subtitle>
-                    阅读 {{ article.clickAmount }}
+                    Listen to your favorite artists and albums whenever and
+                    wherever, online and offline.
                   </v-card-subtitle>
 
                   <v-card-actions>
-                    <v-btn
-                      text
-                      @click.stop="
-                        $router.push({ path: '/article/' + article.aid })
-                      "
-                    >
-                      Read
-                    </v-btn>
+                    <v-btn text> Listen Now </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-col>
             </v-row>
-          </v-col>
-
-          <v-divider vertical class="mx-2"></v-divider>
-
-          <v-col cols="2">
-            <v-card color="#385F73" dark fixed>
-              <v-card-title class="headline">
-                Unlimited music now
-              </v-card-title>
-
-              <v-card-subtitle>
-                Listen to your favorite artists and albums whenever and
-                wherever, online and offline.
-              </v-card-subtitle>
-
-              <v-card-actions>
-                <v-btn text> Listen Now </v-btn>
-              </v-card-actions>
-            </v-card>
           </v-col>
         </v-row>
       </v-container>
