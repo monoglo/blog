@@ -51,7 +51,7 @@
               >
                 <v-icon left> {{ tag.tagIcon }} </v-icon>
                 {{ tag.tagName }}
-                <v-avatar right :class="tag.tagColor + ' darken-1'"> {{ tag.articleAmount }} </v-avatar>
+                <v-avatar right :class="lightenColor(tag.tagColor)"> {{ tag.articleAmount }} </v-avatar>
               </v-chip>
             </v-card-text>
           </v-card>
@@ -78,6 +78,19 @@ export default {
           console.info(this.tags)
         }
       })
+    },
+    lightenColor(color) {
+      color = String(color)
+      if (color.indexOf('darken') !== -1 || color.indexOf('accent') !== -1) {
+        return color.split(' ')[0]
+      } else if (color.indexOf('lighten') !== -1) {
+        return (
+          color.slice(0, color.length - 1) +
+          (Number(color.charAt(color.length - 1)) + 1)
+        )
+      } else {
+        return color + ' lighten-1'
+      }
     }
   }
 }
