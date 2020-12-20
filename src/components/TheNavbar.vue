@@ -25,7 +25,7 @@
       <v-divider></v-divider>
 
       <v-list nav dense>
-        <v-list-item link @click.stop="$router.push({path: '/'})">
+        <v-list-item link @click.stop="$router.push({path: '/'}, () => {})">
           <v-list-item-icon>
             <v-icon>mdi-folder</v-icon>
           </v-list-item-icon>

@@ -18,18 +18,34 @@
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
 
-                <v-menu left bottom>
+                <v-menu left transition="scroll-y-transition">
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn icon v-bind="attrs" v-on="on" color="white">
                       <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                   </template>
 
-                  <v-list>
-                    <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-                      <v-list-item-title>Option {{ n }}</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
+                  <v-card class="mx-auto" max-width="400" tile>
+                    <v-list>
+                      <v-list-item
+                        dese
+                        @click.stop="$router.push({ path: '/article/' + article.aid + '/edit'})"
+                      >
+                        <v-list-item-icon
+                          ><v-icon
+                            >mdi-file-document-edit</v-icon
+                          ></v-list-item-icon
+                        >
+                        <v-list-item-content>修改</v-list-item-content>
+                      </v-list-item>
+                      <v-list-item dese @click="() => {}">
+                        <v-list-item-icon
+                          ><v-icon>mdi-eye-off</v-icon></v-list-item-icon
+                        >
+                        <v-list-item-content>隐藏</v-list-item-content>
+                      </v-list-item>
+                    </v-list>
+                  </v-card>
                 </v-menu>
               </v-app-bar>
               <v-card-title>
