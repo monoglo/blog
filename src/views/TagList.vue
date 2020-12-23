@@ -41,18 +41,17 @@
             </v-parallax>
             <v-divider></v-divider>
             <v-card-text>
-              <v-chip
+              <v-btn
                 v-for="tag in tags"
                 v-bind:key="tag.tagId"
-                class="ma-2"
+                class="ma-2 white--text"
                 :color="tag.tagColor"
-                label
-                text-color="white"
+                @click.stop="$router.push({ path: '/tag/' + tag.tagId })"
               >
                 <v-icon left> {{ tag.tagIcon }} </v-icon>
                 {{ tag.tagName }}
-                <v-avatar right :class="lightenColor(tag.tagColor)"> {{ tag.articleAmount }} </v-avatar>
-              </v-chip>
+                <v-avatar right size="24" :class="lightenColor(tag.tagColor)"> {{ tag.articleAmount }} </v-avatar>
+              </v-btn>
             </v-card-text>
           </v-card>
         </v-col>
@@ -67,10 +66,10 @@ export default {
     tags: []
   }),
   mounted() {
-    this.getArticleTags()
+    this.getTags()
   },
   methods: {
-    getArticleTags() {
+    getTags() {
       this.$axios.get('api/tags/').then(response => {
         // console.info(response.data)
         if (response.data.code === 200) {

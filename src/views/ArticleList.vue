@@ -18,6 +18,7 @@
               </v-card-title>
 
               <v-card-subtitle>
+                {{ article.authorName }}
                 阅读 {{ article.clickAmount }}
               </v-card-subtitle>
 

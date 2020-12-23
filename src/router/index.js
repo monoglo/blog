@@ -56,6 +56,15 @@ const routes = [
       import(/* webpackChunkName: "taglist" */ '../views/TagList.vue')
   },
   {
+    path: '/tag/:tagId',
+    name: 'TagPage',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "tagpage" */ '../views/TagPage.vue')
+  },
+  {
     path: '/archive',
     name: 'ArchiveList',
     // route level code-splitting
