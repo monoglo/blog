@@ -3,7 +3,7 @@
     <div class="pa-1">
       <v-container>
         <v-row dense>
-          <v-col cols="9">
+          <v-col :cols="colWidth">
             <!-- <v-row dense v-for="article in article_list" :key="article.aid">
                   <v-col cols="12"> -->
             <template v-if="loading">
@@ -50,9 +50,12 @@
           <v-col cols="3">
             <v-row>
               <v-col cols="1">
-                <v-divider vertical class="mx-2"></v-divider>
+                <v-divider
+                  vertical
+                  class="mx-2 d-none d-md-flex d-lg-flex"
+                ></v-divider>
               </v-col>
-              <v-col cols="11">
+              <v-col cols="11" class="d-none d-md-flex d-lg-flex">
                 <v-card color="#385F73" dark>
                   <v-card-title class="headline">
                     Unlimited music now
@@ -88,6 +91,23 @@ export default {
     return {
       article_list: {},
       loading: true
+    }
+  },
+  computed: {
+    colWidth() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 12
+        case 'sm':
+          return 12
+        case 'md':
+          return 9
+        case 'lg':
+          return 9
+        case 'xl':
+          return 9
+      }
+      return 9
     }
   },
   mounted() {

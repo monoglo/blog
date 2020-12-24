@@ -29,7 +29,11 @@
                     <v-list>
                       <v-list-item
                         dese
-                        @click.stop="$router.push({ path: '/article/' + article.aid + '/edit'})"
+                        @click.stop="
+                          $router.push({
+                            path: '/article/' + article.aid + '/edit'
+                          })
+                        "
                       >
                         <v-list-item-icon
                           ><v-icon
@@ -50,6 +54,12 @@
               </v-app-bar>
               <v-card-title>
                 <p class="ml-3 font-weight-medium text-h4 white--text">
+                  <v-skeleton-loader
+                    class="ml-3"
+                    width="200px"
+                    type="heading"
+                    v-if="articleLoading"
+                  ></v-skeleton-loader>
                   {{ article.title }}
                 </p>
               </v-card-title>
@@ -60,6 +70,14 @@
             </v-card-subtitle>
             <v-divider></v-divider>
             <v-card-text>
+              <template v-if="articleLoading">
+                <v-skeleton-loader
+                  type="paragraph"
+                  class="mb-4"
+                  v-for="i in (0, 4)"
+                  v-bind:key="i"
+                ></v-skeleton-loader>
+              </template>
               <p
                 v-for="paragraph in article.paragraph"
                 v-bind:key="paragraph"
@@ -69,20 +87,31 @@
                 {{ paragraph }}
               </p>
             </v-card-text>
-            <v-divider></v-divider>
-            <v-card-subtitle>
-              <v-chip
-                v-for="tag in tags"
-                v-bind:key="tag.tagId"
-                class="ma-2"
-                :color="tag.tagColor"
-                label
-                text-color="white"
-              >
-                <v-icon left> {{ tag.tagIcon }} </v-icon>
-                {{ tag.tagName }}
-              </v-chip>
-            </v-card-subtitle>
+            <template v-if="!noTags">
+              <v-divider></v-divider>
+              <v-card-subtitle>
+                <template v-if="tagsLoading">
+                  <v-skeleton-loader
+                    v-for="i in (0, 5)"
+                    v-bind:key="i"
+                    class="ma-2"
+                    type="button"
+                    style="display: inline-block"
+                  ></v-skeleton-loader>
+                </template>
+                <v-chip
+                  v-for="tag in tags"
+                  v-bind:key="tag.tagId"
+                  class="ma-2"
+                  :color="tag.tagColor"
+                  label
+                  text-color="white"
+                >
+                  <v-icon left> {{ tag.tagIcon }} </v-icon>
+                  {{ tag.tagName }}
+                </v-chip>
+              </v-card-subtitle>
+            </template>
           </v-card>
         </v-col>
       </v-row>
@@ -104,7 +133,10 @@ export default {
       },
       tags: [],
       readMark: true,
-      readTime: 60000
+      readTime: 60000,
+      articleLoading: true,
+      tagsLoading: true,
+      noTags: false
     }
   },
   mounted() {
@@ -123,6 +155,7 @@ export default {
           this.readTime = this.article.text.length / 400
           // console.info(this.readTime * 60000)
           setTimeout(this.read, this.readTime * 60000)
+          this.articleLoading = false
         })
     },
     getArticleTags() {
@@ -133,6 +166,10 @@ export default {
           if (response.data.code === 200) {
             this.tags = response.data.data
             // console.info(this.tags)
+            this.tagsLoading = false
+          } else {
+            this.tagsLoading = false
+            this.noTags = true
           }
         })
     },

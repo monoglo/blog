@@ -41,6 +41,15 @@
             </v-parallax>
             <v-divider></v-divider>
             <v-card-text>
+              <template v-if="loading">
+                <v-skeleton-loader
+                  v-for="i in (0, 7)"
+                  v-bind:key="i"
+                  class="ma-2"
+                  type="button"
+                  style="display:inline-block;"
+                ></v-skeleton-loader>
+              </template>
               <v-btn
                 v-for="tag in tags"
                 v-bind:key="tag.tagId"
@@ -50,7 +59,9 @@
               >
                 <v-icon left> {{ tag.tagIcon }} </v-icon>
                 {{ tag.tagName }}
-                <v-avatar right size="24" :class="lightenColor(tag.tagColor)"> {{ tag.articleAmount }} </v-avatar>
+                <v-avatar right size="24" :class="lightenColor(tag.tagColor)">
+                  {{ tag.articleAmount }}
+                </v-avatar>
               </v-btn>
             </v-card-text>
           </v-card>
@@ -63,7 +74,8 @@
 <script>
 export default {
   data: () => ({
-    tags: []
+    tags: [],
+    loading: true
   }),
   mounted() {
     this.getTags()
@@ -75,6 +87,7 @@ export default {
         if (response.data.code === 200) {
           this.tags = response.data.data
           console.info(this.tags)
+          this.loading = false
         }
       })
     },
@@ -95,4 +108,7 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="sass">
+.v-skeleton-loader__button
+  width: 100px
+</style>

@@ -54,6 +54,16 @@
             <v-divider></v-divider>
             <v-card-text>
               <v-divider></v-divider>
+              <template v-if="loading">
+                <v-skeleton-loader
+                  class="my-2"
+                  elevation="2"
+                  height="137px"
+                  type="heading, text, button"
+                  v-for="i in (0, 5)"
+                  v-bind:key="i"
+                ></v-skeleton-loader>
+              </template>
               <v-card
                 :color="darkenColor(tag.tagColor)"
                 class="my-2"
@@ -92,7 +102,8 @@
 export default {
   data: () => ({
     tag: {},
-    article_list: []
+    article_list: [],
+    loading: true
   }),
   mounted() {
     this.getTagByTagId()
@@ -114,6 +125,7 @@ export default {
       this.$axios.get('api/articles/tag/' + this.tag.tagName).then(response => {
         console.info(response.data.data)
         this.article_list = response.data.data
+        this.loading = false
       })
     },
     lightenColor(color) {
@@ -148,4 +160,11 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="sass">
+.v-skeleton-loader__heading
+  margin: 16px 16px 8px 16px
+.v-skeleton-loader__text
+  margin: 0px 16px
+.v-skeleton-loader__button
+  margin: 24px 16px 16px 16px
+</style>
