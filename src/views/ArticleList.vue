@@ -6,6 +6,16 @@
           <v-col cols="9">
             <!-- <v-row dense v-for="article in article_list" :key="article.aid">
                   <v-col cols="12"> -->
+            <template v-if="loading">
+              <v-skeleton-loader
+                class="my-2"
+                elevation="2"
+                height="137px"
+                type="heading, text, button"
+                v-for="i in (0, 5)"
+                v-bind:key="i"
+              ></v-skeleton-loader>
+            </template>
             <v-card
               color="#385F73"
               class="my-2"
@@ -76,7 +86,8 @@ export default {
   components: {},
   data() {
     return {
-      article_list: {}
+      article_list: {},
+      loading: true
     }
   },
   mounted() {
@@ -91,8 +102,18 @@ export default {
       this.$axios.get('api/articles/visible').then(response => {
         console.info(response.data.data)
         this.article_list = response.data.data
+        this.loading = false
       })
     }
   }
 }
 </script>
+
+<style lang="sass">
+.v-skeleton-loader__heading
+  margin: 16px 16px 8px 16px
+.v-skeleton-loader__text
+  margin: 0px 16px
+.v-skeleton-loader__button
+  margin: 24px 16px 16px 16px
+</style>
