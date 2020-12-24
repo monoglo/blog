@@ -1,7 +1,7 @@
 <template>
-  <v-app>
+  <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
     <!-- <keep-alive> -->
-      <blog-navbar></blog-navbar>
+    <blog-navbar></blog-navbar>
     <!-- </keep-alive> -->
     <scroll-to-top></scroll-to-top>
     <v-main>
@@ -24,6 +24,12 @@ export default {
 
   data: () => ({
     fab: false
-  })
+  }),
+
+  computed: {
+    theme() {
+      return this.$vuetify.theme.dark ? 'dark' : 'light'
+    }
+  }
 }
 </script>
