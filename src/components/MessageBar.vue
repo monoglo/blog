@@ -1,16 +1,11 @@
 <template>
-  <v-snackbar v-model="show" :timeout="timeout" :color="color">
+  <v-snackbar v-model="snackbar" :timeout="timeout" :color="color">
     {{ text }}
     <template v-slot:action="{ attrs }">
-        <v-btn
-          color="blue"
-          text
-          v-bind="attrs"
-          @click="show = false"
-        >
-          关闭
-        </v-btn>
-      </template>
+      <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+        关闭
+      </v-btn>
+    </template>
   </v-snackbar>
 </template>
 
@@ -33,6 +28,12 @@ export default {
     text: {
       type: String,
       default: ''
+    }
+  },
+  computed: {
+    snackbar: {
+      get() { return this.show },
+      set() {}
     }
   }
 }
