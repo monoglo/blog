@@ -29,6 +29,7 @@
                     <v-list>
                       <v-list-item
                         dese
+                        :disabled="!$store.state.isLogin"
                         @click.stop="
                           $router.push({
                             path: '/article/' + article.aid + '/edit'
@@ -42,7 +43,7 @@
                         >
                         <v-list-item-content>修改</v-list-item-content>
                       </v-list-item>
-                      <v-list-item dese @click="() => {}">
+                      <v-list-item dese :disabled="!$store.state.isLogin" @click="() => {}">
                         <v-list-item-icon
                           ><v-icon>mdi-eye-off</v-icon></v-list-item-icon
                         >
@@ -94,9 +95,8 @@
                   <v-skeleton-loader
                     v-for="i in (0, 5)"
                     v-bind:key="i"
-                    class="ma-2"
+                    class="ma-2 d-inline-block"
                     type="button"
-                    style="display: inline-block"
                   ></v-skeleton-loader>
                 </template>
                 <v-chip

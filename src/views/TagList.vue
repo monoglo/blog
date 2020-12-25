@@ -45,9 +45,8 @@
                 <v-skeleton-loader
                   v-for="i in (0, 7)"
                   v-bind:key="i"
-                  class="ma-2"
+                  class="ma-2 d-inline-block"
                   type="button"
-                  style="display:inline-block;"
                 ></v-skeleton-loader>
               </template>
               <v-btn

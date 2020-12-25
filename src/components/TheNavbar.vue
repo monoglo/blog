@@ -3,12 +3,14 @@
     <v-navigation-drawer app v-model="drawer">
       <v-list class="pink accent-2">
         <v-list-item>
-            <v-list-item-avatar>
-              <v-img
-                src="https://avatars3.githubusercontent.com/u/26409918?s=460&u=8ab96862a3e98c853128accca654790fc15cdaaa&v=4"
-                @click.stop="goToGithub()"
-              ></v-img>
-            </v-list-item-avatar>
+          <v-list-item-avatar>
+            <v-img
+              v-ripple
+              style="cursor: pointer"
+              src="https://avatars3.githubusercontent.com/u/26409918?s=460&u=8ab96862a3e98c853128accca654790fc15cdaaa&v=4"
+              @click.stop="goToGithub()"
+            ></v-img>
+          </v-list-item-avatar>
         </v-list-item>
 
         <v-list-item link>

@@ -15,8 +15,11 @@
       <v-btn fab small @click.stop="$router.push({ path: '/create/article' })"
         ><v-icon>mdi-book-plus-multiple-outline</v-icon></v-btn
       >
-      <v-btn fab small @click.stop="loginForm = !loginForm"
+      <v-btn fab small @click.stop="loginForm = !loginForm" v-if="!$store.state.isLogin"
         ><v-icon>mdi-account</v-icon></v-btn
+      >
+      <v-btn fab small @click.stop="userLogout()" v-else
+        ><v-icon>mdi-account-arrow-right</v-icon></v-btn
       >
     </v-speed-dial>
     <v-btn fab color="primary" fixed bottom right @click="toTop()" v-else>
@@ -33,10 +36,10 @@
           <v-form>
             <v-text-field
               label="邮箱"
-              name="username"
+              name="email"
               prepend-icon="mdi-account"
               type="text"
-              v-model="loginInfo.u_name"
+              v-model="loginInfo.email"
             />
             <v-text-field
               id="password"
@@ -44,7 +47,7 @@
               name="password"
               prepend-icon="mdi-lock"
               type="password"
-              v-model="loginInfo.u_password"
+              v-model="loginInfo.password"
             />
           </v-form>
         </v-card-text>
@@ -71,6 +74,7 @@ export default {
   }),
   mounted() {
     window.addEventListener('scroll', this.onScroll, true)
+    this.fastLogin()
   },
   methods: {
     onScroll(e) {
@@ -80,6 +84,15 @@ export default {
     },
     toTop() {
       this.$vuetify.goTo(0)
+    },
+    userLogin() {
+      this.$store.dispatch('login', this.loginInfo)
+    },
+    userLogout() {
+      this.$store.dispatch('logout')
+    },
+    fastLogin() {
+      this.$store.dispatch('fastLogin')
     }
   }
 }
