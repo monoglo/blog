@@ -67,7 +67,7 @@
               ></v-textarea>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="primary" depressed @click="submit" class="ms-7">
+              <v-btn color="primary" :disabled="!$store.state.isLogin" depressed @click="submit" class="ms-7">
                 提交
               </v-btn>
             </v-card-actions>

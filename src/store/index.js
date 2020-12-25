@@ -20,15 +20,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login({ commit }, { email, password }) {
-      const userForm = new FormData()
-      userForm.append('username', email)
-      userForm.append('password', password)
-      Vue.axios.post('api/login', userForm)
-        .then(response => {
-          commit('login', response.data.data)
-        })
-    },
     logout({ commit }) {
       Vue.axios.get('api/logout').then(response => {
         commit('logout')

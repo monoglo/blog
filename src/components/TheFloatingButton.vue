@@ -15,7 +15,11 @@
       <v-btn fab small @click.stop="$router.push({ path: '/create/article' })"
         ><v-icon>mdi-book-plus-multiple-outline</v-icon></v-btn
       >
-      <v-btn fab small @click.stop="loginForm = !loginForm" v-if="!$store.state.isLogin"
+      <v-btn
+        fab
+        small
+        @click.stop="loginForm = !loginForm"
+        v-if="!$store.state.isLogin"
         ><v-icon>mdi-account</v-icon></v-btn
       >
       <v-btn fab small @click.stop="userLogout()" v-else
@@ -56,25 +60,41 @@
           <v-btn color="blue darken-1" text @click="loginForm = false">
             关闭
           </v-btn>
-          <v-btn color="indigo white--text" v-on:click="userLogin()">登陆</v-btn>
+          <v-btn
+            color="indigo white--text"
+            v-on:click="userLogin()"
+            :loading="loginLoading"
+            >登陆</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <message-bar
+      :show.sync="messageBar"
+      timeout="2000"
+      :text="messageBarText"
+    ></message-bar>
   </div>
 </template>
 
 <script>
+import MessageBar from '@/components/MessageBar.vue'
 export default {
   name: 'ScrollBackToTopButton',
+  components: {
+    'message-bar': MessageBar
+  },
   data: () => ({
     isOpen: false,
     isScroll: false,
     loginInfo: {},
-    loginForm: false
+    loginForm: false,
+    loginLoading: false,
+    messageBar: false,
+    messageBarText: '登录成功'
   }),
   mounted() {
     window.addEventListener('scroll', this.onScroll, true)
-    this.fastLogin()
   },
   methods: {
     onScroll(e) {
@@ -86,13 +106,25 @@ export default {
       this.$vuetify.goTo(0)
     },
     userLogin() {
-      this.$store.dispatch('login', this.loginInfo)
+      this.loginLoading = true
+      const userForm = new FormData()
+      userForm.append('username', this.loginInfo.email)
+      userForm.append('password', this.loginInfo.password)
+      this.$axios.post('api/login', userForm).then(response => {
+        this.$store.commit('login', response.data.data)
+        this.loginLoading = false
+        this.showMessageBar('登录成功', 2000)
+        this.loginForm = false
+      })
     },
     userLogout() {
       this.$store.dispatch('logout')
+      this.showMessageBar('已成功登出', 2000)
     },
-    fastLogin() {
-      this.$store.dispatch('fastLogin')
+    showMessageBar(message, timeout) {
+      this.messageBarText = message
+      this.messageBar = true
+      setTimeout(() => { this.messageBar = false }, timeout)
     }
   }
 }

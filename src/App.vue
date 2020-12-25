@@ -30,6 +30,16 @@ export default {
     theme() {
       return this.$vuetify.theme.dark ? 'dark' : 'light'
     }
+  },
+
+  mounted() {
+    this.fastLogin()
+  },
+
+  methods: {
+    fastLogin() {
+      this.$store.dispatch('fastLogin')
+    }
   }
 }
 </script>
