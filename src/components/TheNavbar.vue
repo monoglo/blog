@@ -76,6 +76,23 @@
         @click.stop="drawer = !drawer"
         color="white"
       ></v-app-bar-nav-icon>
+      <v-spacer class="d-none d-md-flex"></v-spacer>
+      <v-text-field
+        v-model="searchBar"
+        dark
+        color="indigo"
+        class="shrink mx-4"
+        flat
+        hide-details
+        label="Search"
+        prepend-inner-icon="mdi-layers-search"
+        solo-inverted
+        dense
+        clearable
+        filled
+        rounded
+        @keydown.enter="goSearchPage()"
+      ></v-text-field>
     </v-app-bar>
   </div>
 </template>
@@ -84,11 +101,16 @@
 export default {
   name: 'Navbar',
   data: () => ({
-    drawer: true
+    drawer: true,
+    searchBar: ''
   }),
   methods: {
     goToGithub() {
       window.open('https://github.com/monoglo', '_blank')
+    },
+    goSearchPage() {
+      // this.$router.push({ path: '/search?keyword=' + this.searchBar })
+      window.open('/search?keyword=' + this.searchBar, '_blank')
     }
   }
 }

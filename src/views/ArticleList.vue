@@ -6,7 +6,7 @@
           <v-col :cols="colWidth">
             <!-- <v-row dense v-for="article in article_list" :key="article.aid">
                   <v-col cols="12"> -->
-            <template v-if="loading">
+            <template v-if="articelLoading">
               <v-skeleton-loader
                 class="my-2"
                 elevation="2"
@@ -55,8 +55,8 @@
                   class="mx-2 d-none d-md-flex d-lg-flex"
                 ></v-divider>
               </v-col>
-              <v-col cols="11" class="d-none d-md-flex d-lg-flex">
-                <v-card color="#385F73" dark>
+              <v-col cols="11" class="d-none d-md-block d-lg-block">
+                <v-card color="#385F73" dark class="mb-2">
                   <v-card-title class="headline">
                     Unlimited music now
                   </v-card-title>
@@ -70,6 +70,32 @@
                     <v-btn text> Listen Now </v-btn>
                   </v-card-actions>
                 </v-card>
+                <template v-if="tagLoading">
+                  <v-skeleton-loader
+                    v-for="i in (0, 7)"
+                    v-bind:key="i"
+                    type="button"
+                  ></v-skeleton-loader>
+                </template>
+                <template v-else>
+                  <v-btn
+                    v-for="tag in tags"
+                    v-bind:key="tag.tagId"
+                    class="mt-2 mr-2 white--text"
+                    :color="tag.tagColor"
+                    @click.stop="$router.push({ path: '/tag/' + tag.tagId })"
+                  >
+                    <v-icon left> {{ tag.tagIcon }} </v-icon>
+                    {{ tag.tagName }}
+                    <v-avatar
+                      right
+                      size="24"
+                      :class="lightenColor(tag.tagColor)"
+                    >
+                      {{ tag.articleAmount }}
+                    </v-avatar>
+                  </v-btn>
+                </template>
               </v-col>
             </v-row>
           </v-col>
@@ -90,7 +116,9 @@ export default {
   data() {
     return {
       article_list: {},
-      loading: true
+      tags: {},
+      articelLoading: true,
+      tagLoading: true
     }
   },
   computed: {
@@ -113,6 +141,7 @@ export default {
   mounted() {
     // console.info(this.$store.state.count)
     this.getArticleList()
+    this.getTags()
   },
   methods: {
     addCount() {
@@ -122,8 +151,31 @@ export default {
       this.$axios.get('api/articles/visible').then(response => {
         console.info(response.data.data)
         this.article_list = response.data.data
-        this.loading = false
+        this.articelLoading = false
       })
+    },
+    getTags() {
+      this.$axios.get('api/tags/').then(response => {
+        // console.info(response.data)
+        if (response.data.code === 200) {
+          this.tags = response.data.data
+          console.info(this.tags)
+          this.tagLoading = false
+        }
+      })
+    },
+    lightenColor(color) {
+      color = String(color)
+      if (color.indexOf('darken') !== -1 || color.indexOf('accent') !== -1) {
+        return color.split(' ')[0]
+      } else if (color.indexOf('lighten') !== -1) {
+        return (
+          color.slice(0, color.length - 1) +
+          (Number(color.charAt(color.length - 1)) + 1)
+        )
+      } else {
+        return color + ' lighten-1'
+      }
     }
   }
 }
@@ -136,4 +188,7 @@ export default {
   margin: 0px 16px
 .v-skeleton-loader__button
   margin: 24px 16px 16px 16px
+.v-skeleton-loader__button
+  margin: 10px 0px 0px 0px
+  width: 100%
 </style>
