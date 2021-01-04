@@ -55,7 +55,7 @@
             </v-card-subtitle>
             <v-divider></v-divider>
             <v-card-text>
-              <v-textarea
+              <!-- <v-textarea
                 outlined
                 name="input-7-4"
                 label="在此输入正文..."
@@ -64,10 +64,27 @@
                 no-resize
                 hide-details
                 v-model="text"
-              ></v-textarea>
+              ></v-textarea> -->
+              <mavon-editor
+                id="mavonEditor"
+                :style="[{ 'backgroundColor': $vuetify.theme.dark ? '#1e1e1e' : '#ffffff'}]"
+                placeholder="在此输入正文..."
+                v-model="text"
+                :editorBackground="$vuetify.theme.dark ? '#1e1e1e' : '#ffffff'"
+                :previewBackground="$vuetify.theme.dark ? '#1e1e1e' : '#ffffff'"
+                :toolbarsBackground="
+                  $vuetify.theme.dark ? '#1e1e1e' : '#ffffff'
+                "
+              ></mavon-editor>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="primary" :disabled="!$store.state.isLogin" depressed @click="submit" class="ms-7">
+              <v-btn
+                color="primary"
+                :disabled="!$store.state.isLogin"
+                depressed
+                @click="submit"
+                class="ms-7"
+              >
                 提交
               </v-btn>
             </v-card-actions>
@@ -80,9 +97,12 @@
 
 <script>
 import TagChip from '@/components/TagChip.vue'
+import { mavonEditor } from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 export default {
   components: {
-    'tag-chip': TagChip
+    'tag-chip': TagChip,
+    'mavon-editor': mavonEditor
   },
   data() {
     return {
@@ -142,4 +162,11 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+#mavonEditor {
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: 0;
+}
+</style>

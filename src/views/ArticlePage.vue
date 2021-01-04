@@ -43,7 +43,11 @@
                         >
                         <v-list-item-content>修改</v-list-item-content>
                       </v-list-item>
-                      <v-list-item dese :disabled="!$store.state.isLogin" @click="() => {}">
+                      <v-list-item
+                        dese
+                        :disabled="!$store.state.isLogin"
+                        @click="() => {}"
+                      >
                         <v-list-item-icon
                           ><v-icon>mdi-eye-off</v-icon></v-list-item-icon
                         >
@@ -70,8 +74,8 @@
               创建于{{ moment.utc(article.createTime).local().format('lll') }}
             </v-card-subtitle>
             <v-divider></v-divider>
-            <v-card-text>
-              <template v-if="articleLoading">
+            <v-card-text v-if="articleLoading">
+              <template>
                 <v-skeleton-loader
                   type="paragraph"
                   class="mb-4"
@@ -79,15 +83,28 @@
                   v-bind:key="i"
                 ></v-skeleton-loader>
               </template>
-              <p
+            </v-card-text>
+            <!-- <p
                 v-for="paragraph in article.paragraph"
                 v-bind:key="paragraph"
                 class="text-body-1"
                 style="white-space: pre-line"
               >
                 {{ paragraph }}
-              </p>
-            </v-card-text>
+              </p> -->
+            <mavon-editor
+              v-else
+              id="mavonEditor"
+              :style="[{ color: $vuetify.theme.dark ? '#ffffff' : '#24292e' }]"
+              :boxShadow="false"
+              placeholder="在此输入正文..."
+              v-model="article.text"
+              :toolbarsFlag="Boolean(false)"
+              :subfield="Boolean(false)"
+              defaultOpen="preview"
+              :previewBackground="$vuetify.theme.dark ? '#1e1e1e' : '#ffffff'"
+              :toolbarsBackground="$vuetify.theme.dark ? '#1e1e1e' : '#ffffff'"
+            ></mavon-editor>
             <template v-if="!noTags">
               <v-divider></v-divider>
               <v-card-subtitle>
@@ -120,10 +137,15 @@
 </template>
 
 <script>
+import { mavonEditor } from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 import * as moment from 'moment'
 moment.locale('zh-cn')
 
 export default {
+  components: {
+    'mavon-editor': mavonEditor
+  },
   data() {
     return {
       article: {
@@ -187,4 +209,18 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+#mavonEditor {
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: 0;
+}
+p {
+  font-size: 1rem !important;
+  font-weight: 400;
+  line-height: 1.5rem;
+  letter-spacing: 0.03125em !important;
+  font-family: 'Roboto', sans-serif !important;
+}
+</style>
