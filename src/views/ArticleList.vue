@@ -30,7 +30,8 @@
 
               <v-card-subtitle>
                 {{ article.authorName }}
-                阅读 {{ article.clickAmount }}
+                阅读 {{ article.clickAmount }}<br />
+                {{ moment.utc(article.createTime).fromNow() }}
               </v-card-subtitle>
 
               <v-card-actions>
@@ -152,7 +153,7 @@ export default {
     getArticleList() {
       this.$axios.get('api/articles/visible').then(response => {
         console.info(response.data.data)
-        this.article_list = response.data.data
+        this.article_list = response.data.data.reverse()
         this.articelLoading = false
       })
     },

@@ -134,7 +134,7 @@ export default {
     submit() {
       this.$axios
         .post('api/articles/', {
-          authorId: 1,
+          authorId: this.$store.state.loginUser.uid,
           title: this.title,
           text: this.text
         })

@@ -238,6 +238,7 @@ export default {
 #mavonEditor {
   width: 100%;
   height: 100%;
+  min-height: unset;
   border: none;
   z-index: 0;
 }
