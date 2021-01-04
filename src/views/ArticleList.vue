@@ -8,6 +8,7 @@
                   <v-col cols="12"> -->
             <template v-if="articelLoading">
               <v-skeleton-loader
+                id="articleSkeleton"
                 class="my-2"
                 elevation="2"
                 height="137px"
@@ -72,6 +73,7 @@
                 </v-card>
                 <template v-if="tagLoading">
                   <v-skeleton-loader
+                    id="tagSkeleton"
                     v-for="i in (0, 7)"
                     v-bind:key="i"
                     type="button"
@@ -186,9 +188,9 @@ export default {
   margin: 16px 16px 8px 16px
 .v-skeleton-loader__text
   margin: 0px 16px
-.v-skeleton-loader__button
-  margin: 24px 16px 16px 16px
-.v-skeleton-loader__button
+#articleSkeleton > .v-skeleton-loader__button
+  margin: 24px 0px 0px 16px
+#tagSkeleton > .v-skeleton-loader__button
   margin: 10px 0px 0px 0px
   width: 100%
 </style>
