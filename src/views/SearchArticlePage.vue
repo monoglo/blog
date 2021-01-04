@@ -41,7 +41,6 @@
             </v-parallax>
             <v-divider></v-divider>
             <v-card-text>
-              <v-divider></v-divider>
               <template v-if="loading">
                 <v-skeleton-loader
                   class="my-2"
@@ -52,32 +51,39 @@
                   v-bind:key="i"
                 ></v-skeleton-loader>
               </template>
-              <v-card
-                color="indigo"
-                class="my-2"
-                dark
-                v-for="article in article_list"
-                :key="article.aid"
-              >
-                <v-card-title class="headline">
-                  {{ article.title }}
-                </v-card-title>
+              <template v-else>
+                <p class="text-body-1">
+                  发现
+                  <strong>{{ article_list.length }}</strong> 个接近的结果...
+                </p>
+                <v-divider></v-divider>
+                <v-card
+                  color="indigo"
+                  class="my-2"
+                  dark
+                  v-for="article in article_list.data"
+                  :key="article.aid"
+                >
+                  <v-card-title class="headline">
+                    {{ article.title }}
+                  </v-card-title>
 
-                <v-card-subtitle>
-                  阅读 {{ article.clickAmount }}
-                </v-card-subtitle>
+                  <v-card-subtitle>
+                    阅读 {{ article.clickAmount }}
+                  </v-card-subtitle>
 
-                <v-card-actions>
-                  <v-btn
-                    text
-                    @click.stop="
-                      $router.push({ path: '/article/' + article.aid })
-                    "
-                  >
-                    Read
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
+                  <v-card-actions>
+                    <v-btn
+                      text
+                      @click.stop="
+                        $router.push({ path: '/article/' + article.aid })
+                      "
+                    >
+                      Read
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </template>
             </v-card-text>
           </v-card>
         </v-col>
@@ -98,11 +104,13 @@ export default {
   },
   methods: {
     getArticlesByKeyword() {
-      this.$axios.get('api/articles/titleKey/' + this.$route.query.keyword).then(response => {
-        console.info(response.data.data)
-        this.article_list = response.data.data
-        this.loading = false
-      })
+      this.$axios
+        .get('api/articles/titleKey/' + this.$route.query.keyword)
+        .then(response => {
+          // console.info(response.data.data)
+          this.article_list = response.data
+          this.loading = false
+        })
     }
   }
 }
