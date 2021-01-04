@@ -46,7 +46,7 @@
                       <v-list-item
                         dese
                         :disabled="!$store.state.isLogin"
-                        @click="() => {}"
+                        @click.stop="deleteArticle()"
                       >
                         <v-list-item-icon
                           ><v-icon>mdi-eye-off</v-icon></v-list-item-icon
@@ -133,10 +133,16 @@
         </v-col>
       </v-row>
     </v-container>
+    <message-bar
+      :show.sync="messageBar"
+      timeout="2000"
+      :text="messageBarText"
+    ></message-bar>
   </div>
 </template>
 
 <script>
+import MessageBar from '@/components/MessageBar.vue'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import * as moment from 'moment'
@@ -144,7 +150,8 @@ moment.locale('zh-cn')
 
 export default {
   components: {
-    'mavon-editor': mavonEditor
+    'mavon-editor': mavonEditor,
+    'message-bar': MessageBar
   },
   data() {
     return {
@@ -158,7 +165,9 @@ export default {
       readTime: 60000,
       articleLoading: true,
       tagsLoading: true,
-      noTags: false
+      noTags: false,
+      messageBar: false,
+      messageBarText: ''
     }
   },
   mounted() {
@@ -195,6 +204,17 @@ export default {
           }
         })
     },
+    deleteArticle() {
+      this.$axios
+        .delete('api/articles/aid/' + this.$route.params.aid)
+        .then(response => {
+          // console.info(response.data.data)
+          console.info(response.data.code)
+          if (response.data.code === 200) {
+            this.showMessageBar('删除成功', 2000)
+          }
+        })
+    },
     read() {
       if (this.readMark && this.$route.params.aid !== undefined) {
         this.readMark = !this.readMark
@@ -204,6 +224,11 @@ export default {
             console.info('read finished')
           })
       }
+    },
+    showMessageBar(message, timeout) {
+      this.messageBarText = message
+      this.messageBar = true
+      setTimeout(() => { this.messageBar = false }, timeout)
     }
   }
 }

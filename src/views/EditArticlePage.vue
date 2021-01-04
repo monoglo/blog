@@ -55,7 +55,7 @@
             </v-card-subtitle>
             <v-divider></v-divider>
             <v-card-text>
-              <v-textarea
+              <!-- <v-textarea
                 outlined
                 name="input-7-4"
                 label="在此输入正文..."
@@ -64,7 +64,18 @@
                 no-resize
                 hide-details
                 v-model="text"
-              ></v-textarea>
+              ></v-textarea> -->
+              <mavon-editor
+                id="mavonEditor"
+                :style="[{ 'backgroundColor': $vuetify.theme.dark ? '#1e1e1e' : '#ffffff', color: $vuetify.theme.dark ? '#ffffff' : '#24292e'}]"
+                placeholder="在此输入正文..."
+                v-model="text"
+                :editorBackground="$vuetify.theme.dark ? '#1e1e1e' : '#ffffff'"
+                :previewBackground="$vuetify.theme.dark ? '#1e1e1e' : '#ffffff'"
+                :toolbarsBackground="
+                  $vuetify.theme.dark ? '#1e1e1e' : '#ffffff'
+                "
+              ></mavon-editor>
             </v-card-text>
             <v-card-actions>
               <v-btn color="primary" depressed @click="submit" class="ms-7">
@@ -75,26 +86,44 @@
         </v-col>
       </v-row>
     </v-container>
+    <message-bar
+      :show.sync="messageBar"
+      timeout="2000"
+      :text="messageBarText"
+    ></message-bar>
   </div>
 </template>
 
 <script>
+import MessageBar from '@/components/MessageBar.vue'
 import TagChip from '@/components/TagChip.vue'
+import { mavonEditor } from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 export default {
   components: {
-    'tag-chip': TagChip
+    'tag-chip': TagChip,
+    'mavon-editor': mavonEditor,
+    'message-bar': MessageBar
+  },
+  watch: {
+    '$vuetify.theme.dark': (dark) => {
+      document.querySelector('textarea').style.color = dark ? '#ffffff' : '#24292e'
+    }
   },
   data() {
     return {
       article: {},
       title: '',
       tags: [],
-      text: ''
+      text: '',
+      messageBar: false,
+      messageBarText: ''
     }
   },
   computed: {},
   mounted() {
     this.getArticleInfo()
+    document.querySelector('textarea').style.color = this.$vuetify.theme.dark ? '#ffffff' : '#24292e'
   },
   methods: {
     submit() {
@@ -113,7 +142,15 @@ export default {
             )
             .then(response => {
               console.info(response)
+              if (response.data.code === 200) {
+                this.showMessageBar('修改成功', 2000)
+              }
             })
+        })
+        .catch(error => {
+          if (error) {
+            this.showMessageBar('连接失败', 2000)
+          }
         })
       // console.info('submit')
       // console.info(this.selectedTags())
@@ -163,9 +200,23 @@ export default {
         }
       })
       return selectedTags
+    },
+    showMessageBar(message, timeout) {
+      this.messageBarText = message
+      this.messageBar = true
+      setTimeout(() => {
+        this.messageBar = false
+      }, timeout)
     }
   }
 }
 </script>
 
-<style></style>
+<style>
+#mavonEditor {
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: 0;
+}
+</style>

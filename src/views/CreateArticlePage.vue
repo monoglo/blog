@@ -67,7 +67,7 @@
               ></v-textarea> -->
               <mavon-editor
                 id="mavonEditor"
-                :style="[{ 'backgroundColor': $vuetify.theme.dark ? '#1e1e1e' : '#ffffff'}]"
+                :style="[{ 'backgroundColor': $vuetify.theme.dark ? '#1e1e1e' : '#ffffff', color: $vuetify.theme.dark ? '#ffffff' : '#24292e'}]"
                 placeholder="在此输入正文..."
                 v-model="text"
                 :editorBackground="$vuetify.theme.dark ? '#1e1e1e' : '#ffffff'"
@@ -92,28 +92,43 @@
         </v-col>
       </v-row>
     </v-container>
+    <message-bar
+      :show.sync="messageBar"
+      timeout="2000"
+      :text="messageBarText"
+    ></message-bar>
   </div>
 </template>
 
 <script>
+import MessageBar from '@/components/MessageBar.vue'
 import TagChip from '@/components/TagChip.vue'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 export default {
   components: {
     'tag-chip': TagChip,
-    'mavon-editor': mavonEditor
+    'mavon-editor': mavonEditor,
+    'message-bar': MessageBar
+  },
+  watch: {
+    '$vuetify.theme.dark': (dark) => {
+      document.querySelector('textarea').style.color = dark ? '#ffffff' : '#24292e'
+    }
   },
   data() {
     return {
       title: '',
       tags: [],
-      text: ''
+      text: '',
+      messageBar: false,
+      messageBarText: ''
     }
   },
   computed: {},
   mounted() {
     this.getAllTags()
+    document.querySelector('textarea').style.color = this.$vuetify.theme.dark ? '#ffffff' : '#24292e'
   },
   methods: {
     submit() {
@@ -132,6 +147,9 @@ export default {
             )
             .then(response => {
               console.info(response)
+              if (response.data.code === 200) {
+                this.showMessageBar('创建成功', 2000)
+              }
             })
         })
       // console.info('submit')
@@ -157,6 +175,11 @@ export default {
         }
       })
       return selectedTags
+    },
+    showMessageBar(message, timeout) {
+      this.messageBarText = message
+      this.messageBar = true
+      setTimeout(() => { this.messageBar = false }, timeout)
     }
   }
 }
