@@ -26,9 +26,16 @@
                   </template>
 
                   <v-list>
-                    <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-                      <v-list-item-title>Option {{ n }}</v-list-item-title>
-                    </v-list-item>
+                      <v-list-item
+                        dese
+                        :disabled="!$store.state.isLogin"
+                        @click.stop="deleteArticle()"
+                      >
+                        <v-list-item-icon
+                          ><v-icon>mdi-tag-off</v-icon></v-list-item-icon
+                        >
+                        <v-list-item-content>删除标签</v-list-item-content>
+                      </v-list-item>
                   </v-list>
                 </v-menu>
               </v-app-bar>
@@ -95,15 +102,26 @@
         </v-col>
       </v-row>
     </v-container>
+    <message-bar
+      :show.sync="messageBar"
+      timeout="2000"
+      :text="messageBarText"
+    ></message-bar>
   </div>
 </template>
 
 <script>
+import MessageBar from '@/components/MessageBar.vue'
 export default {
+  components: {
+    'message-bar': MessageBar
+  },
   data: () => ({
     tag: {},
     article_list: [],
-    loading: true
+    loading: true,
+    messageBar: false,
+    messageBarText: ''
   }),
   mounted() {
     this.getTagByTagId()
@@ -127,6 +145,17 @@ export default {
         this.article_list = response.data.data
         this.loading = false
       })
+    },
+    deleteArticle() {
+      this.$axios.delete('api/tags/id/' + this.$route.params.tagId).then(response => {
+        console.info(response.data.data)
+        this.showMessageBar('删除成功', 2000)
+      })
+    },
+    showMessageBar(message, timeout) {
+      this.messageBarText = message
+      this.messageBar = true
+      setTimeout(() => { this.messageBar = false }, timeout)
     },
     lightenColor(color) {
       color = String(color)

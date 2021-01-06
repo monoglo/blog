@@ -152,7 +152,7 @@ export default {
     },
     getArticleList() {
       this.$axios.get('api/articles/visible').then(response => {
-        console.info(response.data.data)
+        // console.info(response.data.data)
         this.article_list = response.data.data.reverse()
         this.articelLoading = false
       })
@@ -162,7 +162,7 @@ export default {
         // console.info(response.data)
         if (response.data.code === 200) {
           this.tags = response.data.data
-          console.info(this.tags)
+          // console.info(this.tags)
           this.tagLoading = false
         }
       })

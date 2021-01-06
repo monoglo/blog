@@ -26,8 +26,15 @@
                   </template>
 
                   <v-list>
-                    <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-                      <v-list-item-title>Option {{ n }}</v-list-item-title>
+                    <v-list-item
+                      dese
+                      :disabled="!$store.state.isLogin"
+                      @click.stop="createTagForm = true"
+                    >
+                      <v-list-item-icon
+                        ><v-icon>mdi-tag-plus</v-icon></v-list-item-icon
+                      >
+                      <v-list-item-content>添加标签</v-list-item-content>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -67,14 +74,90 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-dialog persistent v-model="createTagForm" max-width="500">
+      <v-card>
+        <v-toolbar color="indigo" dark flat>
+          <v-toolbar-title>添加标签</v-toolbar-title>
+          <v-spacer />
+        </v-toolbar>
+        <v-card-text class="pa-5">
+          <v-form>
+            <v-text-field
+              label="标签名"
+              prepend-icon="mdi-tag-text"
+              v-model="tagInfo.tagName"
+            />
+            <v-text-field
+              label="标签图标"
+              prepend-icon="mdi-emoticon"
+              v-model="tagInfo.tagIcon"
+            />
+            <v-text-field
+              label="标签颜色"
+              prepend-icon="mdi-invert-colors"
+              v-model="tagInfo.tagColor"
+            />
+          </v-form>
+          预览
+          <v-chip
+            class="ma-2"
+            :color="tagInfo.tagColor"
+            label
+            text-color="white"
+          >
+            <v-icon left> {{ tagInfo.tagIcon }} </v-icon>
+            {{ tagInfo.tagName }}
+          </v-chip>
+          <v-chip
+            class="ma-2"
+            :color="darkenColor(tagInfo.tagColor)"
+            label
+            text-color="white"
+          >
+            <v-icon left> {{ tagInfo.tagIcon }} </v-icon>
+            {{ tagInfo.tagName }}
+          </v-chip>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="blue darken-1" text @click="createTagForm = false">
+            关闭
+          </v-btn>
+          <v-btn
+            color="indigo white--text"
+            v-on:click="createTag()"
+            :loading="createLoading"
+            >创建</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <message-bar
+      :show.sync="messageBar"
+      timeout="2000"
+      :text="messageBarText"
+    ></message-bar>
   </div>
 </template>
 
 <script>
+import MessageBar from '@/components/MessageBar.vue'
 export default {
+  components: {
+    'message-bar': MessageBar
+  },
   data: () => ({
     tags: [],
-    loading: true
+    loading: true,
+    createTagForm: false,
+    createLoading: false,
+    tagInfo: {
+      tagName: '',
+      tagIcon: '',
+      tagColor: ''
+    },
+    messageBar: false,
+    messageBarText: ''
   }),
   mounted() {
     this.getTags()
@@ -85,10 +168,27 @@ export default {
         // console.info(response.data)
         if (response.data.code === 200) {
           this.tags = response.data.data
-          console.info(this.tags)
+          // console.info(this.tags)
           this.loading = false
         }
       })
+    },
+    createTag() {
+      this.createLoading = true
+      this.$axios.post('api/tags/', this.tagInfo).then(response => {
+        // console.info(response.data)
+        if (response.data.code === 200) {
+          this.createLoading = false
+          this.showMessageBar('标签添加成功', 2000)
+          this.createTagForm = false
+          // console.info(response.data)
+        }
+      })
+    },
+    showMessageBar(message, timeout) {
+      this.messageBarText = message
+      this.messageBar = true
+      setTimeout(() => { this.messageBar = false }, timeout)
     },
     lightenColor(color) {
       color = String(color)
@@ -101,6 +201,21 @@ export default {
         )
       } else {
         return color + ' lighten-1'
+      }
+    },
+    darkenColor(color) {
+      color = String(color)
+      if (color.indexOf('lighten') !== -1) {
+        return color.split(' ')[0]
+      } else if (color.indexOf('darken') !== -1) {
+        return (
+          color.slice(0, color.length - 1) +
+          (Number(color.charAt(color.length - 1)) + 1)
+        )
+      } else if (color.indexOf('accent') !== -1) {
+        return color.split(' ')[0] + ' darken-1'
+      } else {
+        return color + ' darken-1'
       }
     }
   }
