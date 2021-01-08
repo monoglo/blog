@@ -149,6 +149,7 @@ import * as moment from 'moment'
 moment.locale('zh-cn')
 
 export default {
+  name: 'ArticlePage',
   components: {
     'mavon-editor': mavonEditor,
     'message-bar': MessageBar

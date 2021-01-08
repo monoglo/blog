@@ -5,7 +5,9 @@
     <!-- </keep-alive> -->
     <scroll-to-top></scroll-to-top>
     <v-main>
-      <router-view />
+      <keep-alive include="ArticleList,TagList,SearchArticlePage">
+        <router-view></router-view>
+      </keep-alive>
     </v-main>
   </v-app>
 </template>

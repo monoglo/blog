@@ -94,6 +94,7 @@
 
 <script>
 export default {
+  name: 'SearchArticlePage',
   data: () => ({
     tag: {},
     article_list: [],

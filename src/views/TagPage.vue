@@ -113,6 +113,7 @@
 <script>
 import MessageBar from '@/components/MessageBar.vue'
 export default {
+  name: 'TagPage',
   components: {
     'message-bar': MessageBar
   },
