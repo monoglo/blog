@@ -9,6 +9,12 @@ module.exports = {
         target: 'http://localhost:8080',
         pathRewrite: { '^/api': '/' },
         changeOrigin: true
+      },
+      '/img': {
+        target: 'https://imgchr.com',
+        pathRewrite: { '^/img': '/' },
+        changeOrigin: true
+        // secure: false
       }
     }
   }

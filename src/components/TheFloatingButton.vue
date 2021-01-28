@@ -111,10 +111,15 @@ export default {
       userForm.append('username', this.loginInfo.email)
       userForm.append('password', this.loginInfo.password)
       this.$axios.post('api/login', userForm).then(response => {
-        this.$store.commit('login', response.data.data)
-        this.loginLoading = false
-        this.showMessageBar('登录成功', 2000)
-        this.loginForm = false
+        if (response.data.code === 200) {
+          this.$store.commit('login', response.data.data)
+          this.loginLoading = false
+          this.showMessageBar('登录成功', 2000)
+          this.loginForm = false
+        } else {
+          this.showMessageBar('登录失败，账号或密码错误！', 2000)
+          this.loginLoading = false
+        }
       })
     },
     userLogout() {
@@ -124,7 +129,9 @@ export default {
     showMessageBar(message, timeout) {
       this.messageBarText = message
       this.messageBar = true
-      setTimeout(() => { this.messageBar = false }, timeout)
+      setTimeout(() => {
+        this.messageBar = false
+      }, timeout)
     }
   }
 }

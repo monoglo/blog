@@ -167,7 +167,7 @@ export default {
       this.$axios
         .get('api/articles/visible/count')
         .then(response => {
-          this.pageAmount = parseInt((response.data.data / 5) + 1)
+          this.pageAmount = Math.ceil(response.data.data / 5)
         })
         .catch(() => {})
     },

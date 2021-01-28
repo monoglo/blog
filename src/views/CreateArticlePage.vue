@@ -66,8 +66,16 @@
                 v-model="text"
               ></v-textarea> -->
               <mavon-editor
+                ref="md"
                 id="mavonEditor"
-                :style="[{ 'backgroundColor': $vuetify.theme.dark ? '#1e1e1e' : '#ffffff', color: $vuetify.theme.dark ? '#ffffff' : '#24292e'}]"
+                :style="[
+                  {
+                    backgroundColor: $vuetify.theme.dark
+                      ? '#1e1e1e'
+                      : '#ffffff',
+                    color: $vuetify.theme.dark ? '#ffffff' : '#24292e'
+                  }
+                ]"
                 placeholder="在此输入正文..."
                 v-model="text"
                 :editorBackground="$vuetify.theme.dark ? '#1e1e1e' : '#ffffff'"
@@ -75,6 +83,7 @@
                 :toolbarsBackground="
                   $vuetify.theme.dark ? '#1e1e1e' : '#ffffff'
                 "
+                @imgAdd="$imgAdd"
               ></mavon-editor>
             </v-card-text>
             <v-card-actions>
@@ -113,8 +122,10 @@ export default {
     'message-bar': MessageBar
   },
   watch: {
-    '$vuetify.theme.dark': (dark) => {
-      document.querySelector('textarea').style.color = dark ? '#ffffff' : '#24292e'
+    '$vuetify.theme.dark': dark => {
+      document.querySelector('textarea').style.color = dark
+        ? '#ffffff'
+        : '#24292e'
     }
   },
   data() {
@@ -129,7 +140,9 @@ export default {
   computed: {},
   mounted() {
     this.getAllTags()
-    document.querySelector('textarea').style.color = this.$vuetify.theme.dark ? '#ffffff' : '#24292e'
+    document.querySelector('textarea').style.color = this.$vuetify.theme.dark
+      ? '#ffffff'
+      : '#24292e'
   },
   methods: {
     submit() {
@@ -157,6 +170,37 @@ export default {
       // console.info(this.selectedTags())
       // console.info(this.text)
     },
+    $imgAdd(pos, $file) {
+      // 第一步.将图片上传到服务器.
+      var formdata = new FormData()
+      formdata.append('source', $file)
+      formdata.append('type', 'file')
+      formdata.append('timestamp', Date.now())
+      formdata.append('nsfw', 0)
+      this.$axios.defaults.withCredentials = true
+      this.$axios({
+        url: 'img/json',
+        method: 'post',
+        data: formdata,
+        headers: {
+        },
+        credentials: 'same-origin',
+        withCredentials: true
+      })
+        .then(url => {
+          // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+          /**
+           * $vm 指为mavonEditor实例，可以通过如下两种方式获取
+           * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
+           * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
+           */
+          console.info(url)
+          this.$refs.md.$img2Url(pos, url)
+        })
+        .catch(error => {
+          console.info(error)
+        })
+    },
     getAllTags() {
       this.$axios.get('api/tags/').then(response => {
         if (response.status === 200) {
@@ -180,7 +224,9 @@ export default {
     showMessageBar(message, timeout) {
       this.messageBarText = message
       this.messageBar = true
-      setTimeout(() => { this.messageBar = false }, timeout)
+      setTimeout(() => {
+        this.messageBar = false
+      }, timeout)
     }
   }
 }
