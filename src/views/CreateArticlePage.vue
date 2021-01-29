@@ -170,37 +170,37 @@ export default {
       // console.info(this.selectedTags())
       // console.info(this.text)
     },
-    $imgAdd(pos, $file) {
-      // 第一步.将图片上传到服务器.
-      var formdata = new FormData()
-      formdata.append('source', $file)
-      formdata.append('type', 'file')
-      formdata.append('timestamp', Date.now())
-      formdata.append('nsfw', 0)
-      this.$axios.defaults.withCredentials = true
-      this.$axios({
-        url: 'img/json',
-        method: 'post',
-        data: formdata,
-        headers: {
-        },
-        credentials: 'same-origin',
-        withCredentials: true
-      })
-        .then(url => {
-          // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
-          /**
-           * $vm 指为mavonEditor实例，可以通过如下两种方式获取
-           * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
-           * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
-           */
-          console.info(url)
-          this.$refs.md.$img2Url(pos, url)
-        })
-        .catch(error => {
-          console.info(error)
-        })
-    },
+    // $imgAdd(pos, $file) {
+    //   // 第一步.将图片上传到服务器.
+    //   var formdata = new FormData()
+    //   formdata.append('source', $file)
+    //   formdata.append('type', 'file')
+    //   formdata.append('timestamp', Date.now())
+    //   formdata.append('nsfw', 0)
+    //   this.$axios.defaults.withCredentials = true
+    //   this.$axios({
+    //     url: 'img/json',
+    //     method: 'post',
+    //     data: formdata,
+    //     headers: {
+    //     },
+    //     credentials: 'same-origin',
+    //     withCredentials: true
+    //   })
+    //     .then(url => {
+    //       // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+    //       /**
+    //        * $vm 指为mavonEditor实例，可以通过如下两种方式获取
+    //        * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
+    //        * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
+    //        */
+    //       console.info(url)
+    //       this.$refs.md.$img2Url(pos, url)
+    //     })
+    //     .catch(error => {
+    //       console.info(error)
+    //     })
+    // },
     getAllTags() {
       this.$axios.get('api/tags/').then(response => {
         if (response.status === 200) {
