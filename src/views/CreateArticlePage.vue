@@ -83,7 +83,6 @@
                 :toolbarsBackground="
                   $vuetify.theme.dark ? '#1e1e1e' : '#ffffff'
                 "
-                @imgAdd="$imgAdd"
               ></mavon-editor>
             </v-card-text>
             <v-card-actions>
@@ -153,14 +152,14 @@ export default {
           text: this.text
         })
         .then(response => {
-          console.info(response.data.data.aid)
+          // console.info(response.data.data.aid)
           this.$axios
             .put(
               'api/articles/aid/' + response.data.data.aid + '/add/tags',
               this.selectedTags()
             )
             .then(response => {
-              console.info(response)
+              // console.info(response)
               if (response.data.code === 200) {
                 this.showMessageBar('创建成功', 2000)
               }
@@ -208,7 +207,7 @@ export default {
           this.tags.forEach(tag => {
             tag.selected = false
           })
-          console.info(this.tags)
+          // console.info(this.tags)
         }
       })
     },
