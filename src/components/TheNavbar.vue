@@ -40,11 +40,11 @@
           </v-list-item-icon>
           <v-list-item-title>标签</v-list-item-title>
         </v-list-item>
-        <v-list-item link @click.stop="$router.push({ path: '/archive' })">
+        <v-list-item link @click.stop="$router.push({ path: '/article/19' })">
           <v-list-item-icon>
-            <v-icon>mdi-star</v-icon>
+            <v-icon>mdi-information-variant</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>归档</v-list-item-title>
+          <v-list-item-title>关于</v-list-item-title>
         </v-list-item>
       </v-list>
       <v-footer fixed padless>
@@ -81,9 +81,7 @@
         v-model="searchBar"
         dark
         color="indigo"
-        class="shrink mx-4"
-        flat
-        hide-details
+        class="shrink mt-6"
         label="Search"
         prepend-inner-icon="mdi-layers-search"
         solo-inverted
@@ -104,6 +102,11 @@ export default {
     drawer: true,
     searchBar: ''
   }),
+  mounted() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      this.$vuetify.theme.dark = true
+    }
+  },
   methods: {
     goToGithub() {
       window.open('https://github.com/monoglo', '_blank')
