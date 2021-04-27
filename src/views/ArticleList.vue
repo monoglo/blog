@@ -17,7 +17,7 @@
             ></v-skeleton-loader>
           </template>
           <v-card
-            color="#385F73"
+            color="light-blue darken-3"
             class="my-2"
             dark
             v-for="article in article_list"
