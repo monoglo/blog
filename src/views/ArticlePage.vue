@@ -6,7 +6,7 @@
           <v-card outlined>
             <v-parallax
               height="200"
-              src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
+              :src="article.backgroundImageUrl"
             >
               <v-app-bar flat color="rgba(0, 0, 0, 0)">
                 <v-btn color="white" icon @click.stop="$router.go(-1)">
@@ -159,6 +159,7 @@ export default {
       article: {
         title: null,
         text: null,
+        backgroundImageUrl: null,
         paragraph: []
       },
       tags: [],
@@ -185,6 +186,9 @@ export default {
           this.article = response.data.data
           this.article.paragraph = this.article.text.split('\n\n')
           this.readTime = this.article.text.length / 400
+          if (this.article.backgroundImageUrl == null) {
+            this.article.backgroundImageUrl = 'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'
+          }
           // console.info(this.readTime * 60000)
           setTimeout(this.read, this.readTime * 60000)
           this.articleLoading = false

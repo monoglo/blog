@@ -30,7 +30,7 @@
       <v-list nav dense>
         <v-list-item link @click.stop="$router.push({ path: '/' }, () => {})">
           <v-list-item-icon>
-            <v-icon>mdi-folder</v-icon>
+            <v-icon>mdi-layers-triple</v-icon>
           </v-list-item-icon>
           <v-list-item-title>首页</v-list-item-title>
         </v-list-item>

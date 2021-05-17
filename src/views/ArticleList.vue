@@ -17,19 +17,24 @@
             ></v-skeleton-loader>
           </template>
           <v-card
-            color="light-blue darken-3"
             class="my-2"
-            dark
             v-for="article in article_list"
             :key="article.aid"
           >
-            <v-card-title class="headline">
-              {{ article.title }}
-            </v-card-title>
+            <v-img
+              class="white--text align-end"
+              height="160px"
+              name="backgroundImageUrl"
+              :src="article.backgroundImageUrl != null ? article.backgroundImageUrl : 'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'"
+            >
+              <v-card-title class="headline">
+                {{ article.title }}
+              </v-card-title>
+            </v-img>
 
             <v-card-subtitle>
-              {{ article.authorName }}
-              阅读 {{ article.clickAmount }}<br />
+              {{ article.authorName }} {{ '&nbsp;|&nbsp;' }}
+              阅读 {{ article.clickAmount }} {{ '&nbsp;|&nbsp;' }}
               {{ moment.utc(article.createTime).fromNow() }}
             </v-card-subtitle>
 
@@ -135,7 +140,7 @@ export default {
     }
   },
   watch: {
-    page: function (val, oldVal) {
+    page: function(val, oldVal) {
       this.getArticleList()
     }
   },

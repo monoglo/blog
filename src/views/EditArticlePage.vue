@@ -6,7 +6,11 @@
           <v-card outlined elevation="18">
             <v-parallax
               height="200"
-              src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
+              :src="
+                backgroundImageUrl != ''
+                  ? backgroundImageUrl
+                  : 'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'
+              "
             >
               <v-app-bar flat color="rgba(0, 0, 0, 0)" class="mt-6">
                 <v-btn color="white" icon @click.stop="$router.go(-1)">
@@ -18,18 +22,19 @@
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
 
-                <v-menu left bottom>
+                <v-menu left bottom :close-on-content-click="false">
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn icon v-bind="attrs" v-on="on" color="white">
                       <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                   </template>
 
-                  <v-list>
-                    <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-                      <v-list-item-title>Option {{ n }}</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
+                  <v-text-field
+                    label="背景图链接"
+                    dark
+                    class="ml-3 font-weight-medium text-h5"
+                    v-model="backgroundImageUrl"
+                  ></v-text-field>
                 </v-menu>
               </v-app-bar>
               <v-card-title class="white--text mt-12">
@@ -67,7 +72,14 @@
               ></v-textarea> -->
               <mavon-editor
                 id="mavonEditor"
-                :style="[{ 'backgroundColor': $vuetify.theme.dark ? '#1e1e1e' : '#ffffff', color: $vuetify.theme.dark ? '#ffffff' : '#24292e'}]"
+                :style="[
+                  {
+                    backgroundColor: $vuetify.theme.dark
+                      ? '#1e1e1e'
+                      : '#ffffff',
+                    color: $vuetify.theme.dark ? '#ffffff' : '#24292e'
+                  }
+                ]"
                 placeholder="在此输入正文..."
                 v-model="text"
                 :editorBackground="$vuetify.theme.dark ? '#1e1e1e' : '#ffffff'"
@@ -107,8 +119,10 @@ export default {
     'message-bar': MessageBar
   },
   watch: {
-    '$vuetify.theme.dark': (dark) => {
-      document.querySelector('textarea').style.color = dark ? '#ffffff' : '#24292e'
+    '$vuetify.theme.dark': dark => {
+      document.querySelector('textarea').style.color = dark
+        ? '#ffffff'
+        : '#24292e'
     }
   },
   data() {
@@ -118,13 +132,16 @@ export default {
       tags: [],
       text: '',
       messageBar: false,
-      messageBarText: ''
+      messageBarText: '',
+      backgroundImageUrl: ''
     }
   },
   computed: {},
   mounted() {
     this.getArticleInfo()
-    document.querySelector('textarea').style.color = this.$vuetify.theme.dark ? '#ffffff' : '#24292e'
+    document.querySelector('textarea').style.color = this.$vuetify.theme.dark
+      ? '#ffffff'
+      : '#24292e'
   },
   methods: {
     submit() {
@@ -132,7 +149,8 @@ export default {
         .put('api/articles/', {
           aid: this.$route.params.aid,
           title: this.title,
-          text: this.text
+          text: this.text,
+          backgroundImageUrl: this.backgroundImageUrl
         })
         .then(response => {
           console.info(response.data.data.aid)
@@ -166,6 +184,9 @@ export default {
             this.article = response.data.data
             this.title = this.article.title
             this.text = this.article.text
+            if (this.article.backgroundImageUrl != null) {
+              this.backgroundImageUrl = this.article.backgroundImageUrl
+            }
             this.$axios.get('api/tags/').then(response => {
               if (response.status === 200) {
                 const tags = response.data.data
