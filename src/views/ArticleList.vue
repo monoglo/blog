@@ -16,37 +16,9 @@
               v-bind:key="i"
             ></v-skeleton-loader>
           </template>
-          <v-card
-            class="my-2"
-            v-for="article in article_list"
-            :key="article.aid"
-          >
-            <v-img
-              class="white--text align-end"
-              height="160px"
-              name="backgroundImageUrl"
-              :src="article.backgroundImageUrl != null ? article.backgroundImageUrl : 'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'"
-            >
-              <v-card-title class="headline">
-                {{ article.title }}
-              </v-card-title>
-            </v-img>
-
-            <v-card-subtitle>
-              {{ article.authorName }} {{ '&nbsp;|&nbsp;' }}
-              阅读 {{ article.clickAmount }} {{ '&nbsp;|&nbsp;' }}
-              {{ moment.utc(article.createTime).fromNow() }}
-            </v-card-subtitle>
-
-            <v-card-actions>
-              <v-btn
-                text
-                @click.stop="$router.push({ path: '/article/' + article.aid })"
-              >
-                Read
-              </v-btn>
-            </v-card-actions>
-          </v-card>
+          <div v-for="article in article_list" :key="article.aid">
+            <article-card :article="article"></article-card>
+          </div>
           <template>
             <!-- <div class="text-center"> -->
             <v-container>
@@ -122,13 +94,15 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import ArticleCard from '@/components/ArticleCard.vue'
 import * as moment from 'moment'
 moment.locale('zh-cn')
 
 export default {
   name: 'ArticleList',
-  components: {},
+  components: {
+    'article-card': ArticleCard
+  },
   data() {
     return {
       article_list: [],

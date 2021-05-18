@@ -26,16 +26,16 @@
                   </template>
 
                   <v-list>
-                      <v-list-item
-                        dese
-                        :disabled="!$store.state.isLogin"
-                        @click.stop="deleteArticle()"
+                    <v-list-item
+                      dese
+                      :disabled="!$store.state.isLogin"
+                      @click.stop="deleteArticle()"
+                    >
+                      <v-list-item-icon
+                        ><v-icon>mdi-tag-off</v-icon></v-list-item-icon
                       >
-                        <v-list-item-icon
-                          ><v-icon>mdi-tag-off</v-icon></v-list-item-icon
-                        >
-                        <v-list-item-content>删除标签</v-list-item-content>
-                      </v-list-item>
+                      <v-list-item-content>删除标签</v-list-item-content>
+                    </v-list-item>
                   </v-list>
                 </v-menu>
               </v-app-bar>
@@ -71,32 +71,9 @@
                   v-bind:key="i"
                 ></v-skeleton-loader>
               </template>
-              <v-card
-                :color="darkenColor(tag.tagColor)"
-                class="my-2"
-                dark
-                v-for="article in article_list"
-                :key="article.aid"
-              >
-                <v-card-title class="headline">
-                  {{ article.title }}
-                </v-card-title>
-
-                <v-card-subtitle>
-                  阅读 {{ article.clickAmount }}
-                </v-card-subtitle>
-
-                <v-card-actions>
-                  <v-btn
-                    text
-                    @click.stop="
-                      $router.push({ path: '/article/' + article.aid })
-                    "
-                  >
-                    Read
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
+              <div v-for="article in article_list" :key="article.aid">
+                <article-card :article="article"></article-card>
+              </div>
             </v-card-text>
           </v-card>
         </v-col>
@@ -111,10 +88,12 @@
 </template>
 
 <script>
+import ArticleCard from '@/components/ArticleCard.vue'
 import MessageBar from '@/components/MessageBar.vue'
 export default {
   name: 'TagPage',
   components: {
+    'article-card': ArticleCard,
     'message-bar': MessageBar
   },
   data: () => ({
@@ -148,15 +127,19 @@ export default {
       })
     },
     deleteArticle() {
-      this.$axios.delete('api/tags/id/' + this.$route.params.tagId).then(response => {
-        console.info(response.data.data)
-        this.showMessageBar('删除成功', 2000)
-      })
+      this.$axios
+        .delete('api/tags/id/' + this.$route.params.tagId)
+        .then(response => {
+          console.info(response.data.data)
+          this.showMessageBar('删除成功', 2000)
+        })
     },
     showMessageBar(message, timeout) {
       this.messageBarText = message
       this.messageBar = true
-      setTimeout(() => { this.messageBar = false }, timeout)
+      setTimeout(() => {
+        this.messageBar = false
+      }, timeout)
     },
     lightenColor(color) {
       color = String(color)

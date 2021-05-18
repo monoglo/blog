@@ -57,32 +57,9 @@
                   <strong>{{ article_list.length }}</strong> 个接近的结果...
                 </p>
                 <v-divider></v-divider>
-                <v-card
-                  color="indigo"
-                  class="my-2"
-                  dark
-                  v-for="article in article_list.data"
-                  :key="article.aid"
-                >
-                  <v-card-title class="headline">
-                    {{ article.title }}
-                  </v-card-title>
-
-                  <v-card-subtitle>
-                    阅读 {{ article.clickAmount }}
-                  </v-card-subtitle>
-
-                  <v-card-actions>
-                    <v-btn
-                      text
-                      @click.stop="
-                        $router.push({ path: '/article/' + article.aid })
-                      "
-                    >
-                      Read
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
+                <div v-for="article in article_list" :key="article.aid">
+                  <article-card :article="article"></article-card>
+                </div>
               </template>
             </v-card-text>
           </v-card>
@@ -93,8 +70,12 @@
 </template>
 
 <script>
+import ArticleCard from '@/components/ArticleCard.vue'
 export default {
   name: 'SearchArticlePage',
+  components: {
+    'article-card': ArticleCard
+  },
   data: () => ({
     tag: {},
     article_list: [],
@@ -109,7 +90,7 @@ export default {
         .get('api/articles/titleKey/' + this.$route.query.keyword)
         .then(response => {
           // console.info(response.data.data)
-          this.article_list = response.data
+          this.article_list = response.data.data
           this.loading = false
         })
     }
