@@ -4,19 +4,16 @@
       <v-row dense>
         <v-col cols="12">
           <v-card outlined>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-parallax
-                  :height="height"
-                  :src="article.backgroundImageUrl"
-                  v-bind="attrs"
-                  v-on="on"
-                >
+            <v-parallax :height="height" :src="article.backgroundImageUrl">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
                   <v-app-bar
                     flat
                     color="rgba(0, 0, 0, 0)"
                     @click.stop="openNewTab(article.backgroundImageUrl)"
                     class="mt-2"
+                    v-bind="attrs"
+                    v-on="on"
                   >
                     <v-btn color="white" icon @click.stop="$router.go(-1)">
                       <v-icon>mdi-arrow-left</v-icon>
@@ -66,21 +63,22 @@
                       </v-card>
                     </v-menu>
                   </v-app-bar>
-                  <v-card-title style="cursor: auto;">
-                    <p class="ml-3 font-weight-medium text-h4 white--text">
-                      <v-skeleton-loader
-                        class="ml-3"
-                        width="200px"
-                        type="heading"
-                        v-if="articleLoading"
-                      ></v-skeleton-loader>
-                      {{ article.title }}
-                    </p>
-                  </v-card-title>
-                </v-parallax>
-              </template>
-              <span> {{ article.backgroundImageCopyright }} </span>
-            </v-tooltip>
+                </template>
+                <span> {{ article.backgroundImageCopyright }} </span>
+              </v-tooltip>
+              <v-card-title style="cursor: auto;">
+                <p class="ml-3 font-weight-medium text-h4 white--text">
+                  <v-skeleton-loader
+                    class="ml-3"
+                    width="200px"
+                    type="heading"
+                    v-if="articleLoading"
+                  ></v-skeleton-loader>
+                  {{ article.title }}
+                </p>
+              </v-card-title>
+            </v-parallax>
+
             <v-card-subtitle>
               上次编辑于 {{ moment.utc(article.lastEditTime).fromNow() }} |
               创建于{{
