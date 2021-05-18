@@ -61,6 +61,7 @@
               inset
               hide-details
               color="dark"
+              class="ml-12"
             ></v-switch>
             夜间模式
           </v-toolbar>
@@ -103,7 +104,10 @@ export default {
     searchBar: ''
   }),
   mounted() {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
       this.$vuetify.theme.dark = true
     }
   },

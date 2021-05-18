@@ -5,10 +5,14 @@
         <v-col cols="12">
           <v-card outlined elevation="18">
             <v-parallax
-              height="200"
-              :src="backgroundImageUrl != '' ? backgroundImageUrl : 'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'"
+              height="300"
+              :src="
+                backgroundImageUrl != ''
+                  ? backgroundImageUrl
+                  : 'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'
+              "
             >
-              <v-app-bar flat color="rgba(0, 0, 0, 0)" class="mt-6">
+              <v-app-bar flat color="rgba(0, 0, 0, 0)" class="mt-2">
                 <v-btn color="white" icon @click.stop="$router.go(-1)">
                   <v-icon>mdi-arrow-left</v-icon>
                 </v-btn>
@@ -26,11 +30,17 @@
                   </template>
 
                   <v-text-field
-                  label="背景图链接"
-                  dark
-                  class="ml-3 font-weight-medium text-h5"
-                  v-model="backgroundImageUrl"
-                ></v-text-field>
+                    label="背景图链接"
+                    dark
+                    class="ml-3 font-weight-medium text-h5"
+                    v-model="backgroundImageUrl"
+                  ></v-text-field>
+                  <v-text-field
+                    label="背景图版权"
+                    dark
+                    class="ml-3 font-weight-medium text-h5"
+                    v-model="backgroundImageCopyright"
+                  ></v-text-field>
                 </v-menu>
               </v-app-bar>
               <v-card-title class="white--text mt-12">
@@ -135,24 +145,39 @@ export default {
       text: '',
       messageBar: false,
       messageBarText: '',
-      backgroundImageUrl: ''
+      backgroundImageUrl: '',
+      backgroundImageCopyright: ''
     }
   },
   computed: {},
   mounted() {
     this.getAllTags()
+    this.getBingImageOfTheDay()
     document.querySelector('textarea').style.color = this.$vuetify.theme.dark
       ? '#ffffff'
       : '#24292e'
   },
   methods: {
+    getBingImageOfTheDay() {
+      this.$axios
+        .get('https://api.no0a.cn/api/bing/0')
+        .then(response => {
+          this.backgroundImageUrl = response.data.bing.url
+          this.backgroundImageCopyright = response.data.bing.copyright
+        })
+    },
     submit() {
       this.$axios
         .post('api/articles/', {
           authorId: this.$store.state.loginUser.uid,
           title: this.title,
           text: this.text,
-          backgroundImageUrl: this.backgroundImageUrl === '' ? null : this.backgroundImageUrl
+          backgroundImageUrl:
+            this.backgroundImageUrl === '' ? null : this.backgroundImageUrl,
+          backgroundImageCopyright:
+            this.backgroundImageCopyright === ''
+              ? null
+              : this.backgroundImageCopyright
         })
         .then(response => {
           // console.info(response.data.data.aid)

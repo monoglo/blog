@@ -4,74 +4,91 @@
       <v-row dense>
         <v-col cols="12">
           <v-card outlined>
-            <v-parallax
-              height="200"
-              :src="article.backgroundImageUrl"
-            >
-              <v-app-bar flat color="rgba(0, 0, 0, 0)">
-                <v-btn color="white" icon @click.stop="$router.go(-1)">
-                  <v-icon>mdi-arrow-left</v-icon>
-                </v-btn>
-
-                <v-toolbar-title class="title white--text pl-0">
-                  Article
-                </v-toolbar-title>
-                <v-spacer></v-spacer>
-
-                <v-menu left transition="scroll-y-transition">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon v-bind="attrs" v-on="on" color="white">
-                      <v-icon>mdi-dots-vertical</v-icon>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-parallax
+                  :height="height"
+                  :src="article.backgroundImageUrl"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-app-bar
+                    flat
+                    color="rgba(0, 0, 0, 0)"
+                    @click.stop="openNewTab(article.backgroundImageUrl)"
+                    class="mt-2"
+                  >
+                    <v-btn color="white" icon @click.stop="$router.go(-1)">
+                      <v-icon>mdi-arrow-left</v-icon>
                     </v-btn>
-                  </template>
 
-                  <v-card class="mx-auto" max-width="400" tile>
-                    <v-list>
-                      <v-list-item
-                        dese
-                        :disabled="!$store.state.isLogin"
-                        @click.stop="
-                          $router.push({
-                            path: '/article/' + article.aid + '/edit'
-                          })
-                        "
-                      >
-                        <v-list-item-icon
-                          ><v-icon
-                            >mdi-file-document-edit</v-icon
-                          ></v-list-item-icon
-                        >
-                        <v-list-item-content>修改</v-list-item-content>
-                      </v-list-item>
-                      <v-list-item
-                        dese
-                        :disabled="!$store.state.isLogin"
-                        @click.stop="deleteArticle()"
-                      >
-                        <v-list-item-icon
-                          ><v-icon>mdi-eye-off</v-icon></v-list-item-icon
-                        >
-                        <v-list-item-content>隐藏</v-list-item-content>
-                      </v-list-item>
-                    </v-list>
-                  </v-card>
-                </v-menu>
-              </v-app-bar>
-              <v-card-title>
-                <p class="ml-3 font-weight-medium text-h4 white--text">
-                  <v-skeleton-loader
-                    class="ml-3"
-                    width="200px"
-                    type="heading"
-                    v-if="articleLoading"
-                  ></v-skeleton-loader>
-                  {{ article.title }}
-                </p>
-              </v-card-title>
-            </v-parallax>
+                    <v-toolbar-title class="title white--text pl-0">
+                      Article
+                    </v-toolbar-title>
+                    <v-spacer></v-spacer>
+
+                    <v-menu left transition="scroll-y-transition">
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon v-bind="attrs" v-on="on" color="white">
+                          <v-icon>mdi-dots-vertical</v-icon>
+                        </v-btn>
+                      </template>
+
+                      <v-card class="mx-auto" max-width="400" tile>
+                        <v-list>
+                          <v-list-item
+                            dese
+                            :disabled="!$store.state.isLogin"
+                            @click.stop="
+                              $router.push({
+                                path: '/article/' + article.aid + '/edit'
+                              })
+                            "
+                          >
+                            <v-list-item-icon
+                              ><v-icon
+                                >mdi-file-document-edit</v-icon
+                              ></v-list-item-icon
+                            >
+                            <v-list-item-content>修改</v-list-item-content>
+                          </v-list-item>
+                          <v-list-item
+                            dese
+                            :disabled="!$store.state.isLogin"
+                            @click.stop="deleteArticle()"
+                          >
+                            <v-list-item-icon
+                              ><v-icon>mdi-eye-off</v-icon></v-list-item-icon
+                            >
+                            <v-list-item-content>隐藏</v-list-item-content>
+                          </v-list-item>
+                        </v-list>
+                      </v-card>
+                    </v-menu>
+                  </v-app-bar>
+                  <v-card-title style="cursor: auto;">
+                    <p class="ml-3 font-weight-medium text-h4 white--text">
+                      <v-skeleton-loader
+                        class="ml-3"
+                        width="200px"
+                        type="heading"
+                        v-if="articleLoading"
+                      ></v-skeleton-loader>
+                      {{ article.title }}
+                    </p>
+                  </v-card-title>
+                </v-parallax>
+              </template>
+              <span> {{ article.backgroundImageCopyright }} </span>
+            </v-tooltip>
             <v-card-subtitle>
               上次编辑于 {{ moment.utc(article.lastEditTime).fromNow() }} |
-              创建于{{ moment.utc(article.createTime).local().format('lll') }}
+              创建于{{
+                moment
+                  .utc(article.createTime)
+                  .local()
+                  .format('lll')
+              }}
             </v-card-subtitle>
             <v-divider></v-divider>
             <v-card-text v-if="articleLoading">
@@ -154,12 +171,31 @@ export default {
     'mavon-editor': mavonEditor,
     'message-bar': MessageBar
   },
+  computed: {
+    height() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 200
+        case 'sm':
+          return 200
+        case 'md':
+          return 100
+        case 'lg':
+          return 300
+        case 'xl':
+          return 300
+        default:
+          return 300
+      }
+    }
+  },
   data() {
     return {
       article: {
         title: null,
         text: null,
         backgroundImageUrl: null,
+        backgroundImageCopyright: null,
         paragraph: []
       },
       tags: [],
@@ -187,7 +223,8 @@ export default {
           this.article.paragraph = this.article.text.split('\n\n')
           this.readTime = this.article.text.length / 400
           if (this.article.backgroundImageUrl == null) {
-            this.article.backgroundImageUrl = 'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'
+            this.article.backgroundImageUrl =
+              'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'
           }
           // console.info(this.readTime * 60000)
           setTimeout(this.read, this.readTime * 60000)
@@ -233,7 +270,12 @@ export default {
     showMessageBar(message, timeout) {
       this.messageBarText = message
       this.messageBar = true
-      setTimeout(() => { this.messageBar = false }, timeout)
+      setTimeout(() => {
+        this.messageBar = false
+      }, timeout)
+    },
+    openNewTab(url) {
+      window.open(url, '_blank')
     }
   }
 }

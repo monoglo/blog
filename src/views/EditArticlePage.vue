@@ -35,6 +35,12 @@
                     class="ml-3 font-weight-medium text-h5"
                     v-model="backgroundImageUrl"
                   ></v-text-field>
+                  <v-text-field
+                    label="背景图版权"
+                    dark
+                    class="ml-3 font-weight-medium text-h5"
+                    v-model="backgroundImageCopyright"
+                  ></v-text-field>
                 </v-menu>
               </v-app-bar>
               <v-card-title class="white--text mt-12">
@@ -133,7 +139,8 @@ export default {
       text: '',
       messageBar: false,
       messageBarText: '',
-      backgroundImageUrl: ''
+      backgroundImageUrl: '',
+      backgroundImageCopyright: ''
     }
   },
   computed: {},
@@ -150,7 +157,8 @@ export default {
           aid: this.$route.params.aid,
           title: this.title,
           text: this.text,
-          backgroundImageUrl: this.backgroundImageUrl
+          backgroundImageUrl: this.backgroundImageUrl,
+          backgroundImageCopyright: this.backgroundImageCopyright
         })
         .then(response => {
           console.info(response.data.data.aid)
@@ -186,6 +194,7 @@ export default {
             this.text = this.article.text
             if (this.article.backgroundImageUrl != null) {
               this.backgroundImageUrl = this.article.backgroundImageUrl
+              this.backgroundImageCopyright = this.article.backgroundImageCopyright
             }
             this.$axios.get('api/tags/').then(response => {
               if (response.status === 200) {
