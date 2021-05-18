@@ -213,6 +213,13 @@ export default {
     this.getArticleTags()
     this.$vuetify.goTo(0)
   },
+  watch: {
+    '$route.params.aid': function(val, oldVal) {
+      this.getArticleInfo()
+      this.getArticleTags()
+      this.$vuetify.goTo(0)
+    }
+  },
   methods: {
     getArticleInfo() {
       this.$axios
