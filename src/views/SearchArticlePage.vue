@@ -39,6 +39,10 @@
                 </p>
               </v-card-title>
             </v-parallax>
+            <v-card-subtitle>
+              发现
+                  <strong>{{ article_list == null ? 0 : article_list.length }}</strong> 个接近的结果...
+            </v-card-subtitle>
             <v-divider></v-divider>
             <v-card-text>
               <template v-if="loading">
@@ -52,11 +56,6 @@
                 ></v-skeleton-loader>
               </template>
               <template v-else>
-                <p class="text-body-1">
-                  发现
-                  <strong>{{ article_list.length }}</strong> 个接近的结果...
-                </p>
-                <v-divider></v-divider>
                 <div v-for="article in article_list" :key="article.aid">
                   <article-card :article="article"></article-card>
                 </div>

@@ -114,7 +114,6 @@ export default {
           // console.info(response.data)
           if (response.data.code === 200) {
             this.tag = response.data.data
-            console.info(this.tag)
             this.getArticlesByTag()
           }
         })

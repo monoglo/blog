@@ -4,80 +4,85 @@
       <v-row dense>
         <v-col cols="12">
           <v-card outlined>
-            <v-parallax :height="height" :src="article.backgroundImageUrl">
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-app-bar
-                    flat
-                    color="rgba(0, 0, 0, 0)"
-                    @click.stop="openNewTab(article.backgroundImageUrl)"
-                    class="mt-2"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-btn color="white" icon @click.stop="$router.go(-1)">
-                      <v-icon>mdi-arrow-left</v-icon>
-                    </v-btn>
+            <v-responsive :aspect-ratio="16 / 6">
+              <v-parallax
+                style="height: 100%;"
+                :src="article.backgroundImageUrl"
+              >
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-app-bar
+                      flat
+                      color="rgba(0, 0, 0, 0)"
+                      @click.stop="openNewTab(article.backgroundImageUrl)"
+                      class="mt-2"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <v-btn color="white" icon @click.stop="$router.go(-1)">
+                        <v-icon>mdi-arrow-left</v-icon>
+                      </v-btn>
 
-                    <v-toolbar-title class="title white--text pl-0">
-                      Article
-                    </v-toolbar-title>
-                    <v-spacer></v-spacer>
+                      <v-toolbar-title class="title white--text pl-0">
+                        Article
+                      </v-toolbar-title>
+                      <v-spacer></v-spacer>
 
-                    <v-menu left transition="scroll-y-transition">
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon v-bind="attrs" v-on="on" color="white">
-                          <v-icon>mdi-dots-vertical</v-icon>
-                        </v-btn>
-                      </template>
+                      <v-menu left transition="scroll-y-transition">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-bind="attrs" v-on="on" color="white">
+                            <v-icon>mdi-dots-vertical</v-icon>
+                          </v-btn>
+                        </template>
 
-                      <v-card class="mx-auto" max-width="400" tile>
-                        <v-list>
-                          <v-list-item
-                            dese
-                            :disabled="!$store.state.isLogin"
-                            @click.stop="
-                              $router.push({
-                                path: '/article/' + article.aid + '/edit'
-                              })
-                            "
-                          >
-                            <v-list-item-icon
-                              ><v-icon
-                                >mdi-file-document-edit</v-icon
-                              ></v-list-item-icon
+                        <v-card class="mx-auto" max-width="400" tile>
+                          <v-list>
+                            <v-list-item
+                              dese
+                              :disabled="!$store.state.isLogin"
+                              @click.stop="
+                                $router.push({
+                                  path: '/article/' + article.aid + '/edit'
+                                })
+                              "
                             >
-                            <v-list-item-content>修改</v-list-item-content>
-                          </v-list-item>
-                          <v-list-item
-                            dese
-                            :disabled="!$store.state.isLogin"
-                            @click.stop="deleteArticle()"
-                          >
-                            <v-list-item-icon
-                              ><v-icon>mdi-eye-off</v-icon></v-list-item-icon
+                              <v-list-item-icon
+                                ><v-icon
+                                  >mdi-file-document-edit</v-icon
+                                ></v-list-item-icon
+                              >
+                              <v-list-item-content>修改</v-list-item-content>
+                            </v-list-item>
+                            <v-list-item
+                              dese
+                              :disabled="!$store.state.isLogin"
+                              @click.stop="deleteArticle()"
                             >
-                            <v-list-item-content>隐藏</v-list-item-content>
-                          </v-list-item>
-                        </v-list>
-                      </v-card>
-                    </v-menu>
-                  </v-app-bar>
-                </template>
-                <span> {{ article.backgroundImageCopyright }} </span>
-              </v-tooltip>
-              <v-card-title style="cursor: auto;">
-                <p class="ml-3 font-weight-medium text-h4 white--text">
-                  <v-skeleton-loader
-                    class="ml-3"
-                    width="200px"
-                    type="heading"
-                    v-if="articleLoading"
-                  ></v-skeleton-loader>
-                  {{ article.title }}
-                </p>
-              </v-card-title>
-            </v-parallax>
+                              <v-list-item-icon
+                                ><v-icon>mdi-eye-off</v-icon></v-list-item-icon
+                              >
+                              <v-list-item-content>隐藏</v-list-item-content>
+                            </v-list-item>
+                          </v-list>
+                        </v-card>
+                      </v-menu>
+                    </v-app-bar>
+                  </template>
+                  <span> {{ article.backgroundImageCopyright }} </span>
+                </v-tooltip>
+                <v-card-title style="cursor: auto;">
+                  <p class="ml-3 font-weight-medium text-h4 white--text">
+                    <v-skeleton-loader
+                      class="ml-3"
+                      width="200px"
+                      type="heading"
+                      v-if="articleLoading"
+                    ></v-skeleton-loader>
+                    {{ article.title }}
+                  </p>
+                </v-card-title>
+              </v-parallax>
+            </v-responsive>
 
             <v-card-subtitle>
               上次编辑于 {{ moment.utc(article.lastEditTime).fromNow() }} |
@@ -169,24 +174,6 @@ export default {
     'mavon-editor': mavonEditor,
     'message-bar': MessageBar
   },
-  computed: {
-    height() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-          return 200
-        case 'sm':
-          return 200
-        case 'md':
-          return 100
-        case 'lg':
-          return 300
-        case 'xl':
-          return 300
-        default:
-          return 300
-      }
-    }
-  },
   data() {
     return {
       article: {
@@ -211,6 +198,9 @@ export default {
     this.getArticleTags()
     this.$vuetify.goTo(0)
   },
+  destroyed() {
+    document.title = 'blog'
+  },
   watch: {
     '$route.params.aid': function(val, oldVal) {
       this.getArticleInfo()
@@ -231,6 +221,7 @@ export default {
             this.article.backgroundImageUrl =
               'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'
           }
+          document.title = this.article.title
           // console.info(this.readTime * 60000)
           setTimeout(this.read, this.readTime * 60000)
           this.articleLoading = false
@@ -300,5 +291,9 @@ p {
   line-height: 1.5rem;
   letter-spacing: 0.03125em !important;
   font-family: 'Roboto', sans-serif !important;
+}
+.v-parallax__image {
+  width: 100%;
+  bottom: 313px;
 }
 </style>

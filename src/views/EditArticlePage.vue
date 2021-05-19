@@ -4,54 +4,61 @@
       <v-row dense>
         <v-col cols="12">
           <v-card outlined elevation="18">
-            <v-parallax
-              height="200"
-              :src="
-                backgroundImageUrl != ''
-                  ? backgroundImageUrl
-                  : 'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'
-              "
-            >
-              <v-app-bar flat color="rgba(0, 0, 0, 0)" class="mt-6">
-                <v-btn color="white" icon @click.stop="$router.go(-1)">
-                  <v-icon>mdi-arrow-left</v-icon>
-                </v-btn>
-
-                <v-toolbar-title class="title white--text pl-0">
-                  Edit Article
-                </v-toolbar-title>
-                <v-spacer></v-spacer>
-
-                <v-menu left bottom :close-on-content-click="false">
+            <v-responsive :aspect-ratio="16 / 6">
+              <v-parallax style="height: 100%;" :src="backgroundImageUrl">
+                <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon v-bind="attrs" v-on="on" color="white">
-                      <v-icon>mdi-dots-vertical</v-icon>
-                    </v-btn>
-                  </template>
+                    <v-app-bar
+                      flat
+                      color="rgba(0, 0, 0, 0)"
+                      @click.stop="openNewTab(backgroundImageUrl)"
+                      class="mt-2"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <v-btn color="white" icon @click.stop="$router.go(-1)">
+                        <v-icon>mdi-arrow-left</v-icon>
+                      </v-btn>
 
+                      <v-toolbar-title class="title white--text pl-0">
+                        Article
+                      </v-toolbar-title>
+                      <v-spacer></v-spacer>
+
+                      <v-menu left bottom :close-on-content-click="false">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-bind="attrs" v-on="on" color="white">
+                            <v-icon>mdi-dots-vertical</v-icon>
+                          </v-btn>
+                        </template>
+
+                        <v-text-field
+                          label="背景图链接"
+                          dark
+                          class="ml-3 font-weight-medium text-h5"
+                          v-model="backgroundImageUrl"
+                        ></v-text-field>
+                        <v-text-field
+                          label="背景图版权"
+                          dark
+                          class="ml-3 font-weight-medium text-h5"
+                          v-model="backgroundImageCopyright"
+                        ></v-text-field>
+                      </v-menu>
+                    </v-app-bar>
+                  </template>
+                  <span> {{ backgroundImageCopyright }} </span>
+                </v-tooltip>
+                <v-card-title style="cursor: auto;">
                   <v-text-field
-                    label="背景图链接"
+                    label="标题"
                     dark
                     class="ml-3 font-weight-medium text-h5"
-                    v-model="backgroundImageUrl"
+                    v-model="title"
                   ></v-text-field>
-                  <v-text-field
-                    label="背景图版权"
-                    dark
-                    class="ml-3 font-weight-medium text-h5"
-                    v-model="backgroundImageCopyright"
-                  ></v-text-field>
-                </v-menu>
-              </v-app-bar>
-              <v-card-title class="white--text mt-12">
-                <v-text-field
-                  label="标题"
-                  dark
-                  class="ml-3 font-weight-medium text-h5"
-                  v-model="title"
-                ></v-text-field>
-              </v-card-title>
-            </v-parallax>
+                </v-card-title>
+              </v-parallax>
+            </v-responsive>
             <v-card-subtitle>
               <tag-chip
                 v-for="tag in tags"
