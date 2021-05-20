@@ -52,6 +52,7 @@
               prepend-icon="mdi-lock"
               type="password"
               v-model="loginInfo.password"
+              v-on:keyup.enter="userLogin()"
             />
           </v-form>
         </v-card-text>

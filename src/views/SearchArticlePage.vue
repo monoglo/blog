@@ -41,7 +41,10 @@
             </v-parallax>
             <v-card-subtitle>
               发现
-                  <strong>{{ article_list == null ? 0 : article_list.length }}</strong> 个接近的结果...
+              <strong>{{
+                article_list == null ? 0 : article_list.length
+              }}</strong>
+              个接近的结果...
             </v-card-subtitle>
             <v-divider></v-divider>
             <v-card-text>
