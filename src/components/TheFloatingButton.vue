@@ -9,6 +9,9 @@
         </v-btn>
       </template>
       <!-- 小按钮组 -->
+      <v-btn fab small @click.stop="changeLang()"
+        ><v-icon>mdi-translate</v-icon></v-btn
+      >
       <v-btn fab small @click.stop="$vuetify.theme.dark = !$vuetify.theme.dark"
         ><v-icon>mdi-theme-light-dark</v-icon></v-btn
       >
@@ -92,7 +95,8 @@ export default {
     loginForm: false,
     loginLoading: false,
     messageBar: false,
-    messageBarText: '登录成功'
+    messageBarText: '登录成功',
+    lang: null
   }),
   mounted() {
     window.addEventListener('scroll', this.onScroll, true)
@@ -133,6 +137,13 @@ export default {
       setTimeout(() => {
         this.messageBar = false
       }, timeout)
+    },
+    changeLang() {
+      if (this.$i18n.locale === 'zh-CN') {
+        this.$i18n.locale = 'en-US'
+      } else {
+        this.$i18n.locale = 'zh-CN'
+      }
     }
   }
 }

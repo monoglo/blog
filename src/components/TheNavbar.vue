@@ -16,7 +16,7 @@
         <v-list-item link>
           <v-list-item-content>
             <v-list-item-title class="title white--text">
-              伟大人类联邦
+              {{ $t('blog.name') }}
             </v-list-item-title>
             <v-list-item-subtitle class="white--text"
               >monoglo37@gmail.com</v-list-item-subtitle

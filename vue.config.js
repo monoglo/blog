@@ -5,6 +5,7 @@ module.exports = {
   transpileDependencies: [
     'vuetify'
   ],
+
   configureWebpack: {
     plugins: [
       new PrerenderSPAPlugin({
@@ -15,6 +16,7 @@ module.exports = {
       })
     ]
   },
+
   devServer: {
     historyApiFallback: true,
     proxy: {
@@ -29,6 +31,15 @@ module.exports = {
         //   changeOrigin: true
         //   // secure: false
       }
+    }
+  },
+
+  pluginOptions: {
+    i18n: {
+      locale: 'zh-CN',
+      fallbackLocale: 'en-US',
+      localeDir: 'locales',
+      enableInSFC: true
     }
   }
 }
