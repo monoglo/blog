@@ -51,11 +51,10 @@
         <v-card
           flat
           tile
-          v-ripple
           width="100%"
           class="pink accent-2 text-center"
         >
-          <v-toolbar>
+          <v-toolbar v-ripple>
             <v-switch
               v-model="$vuetify.theme.dark"
               inset
@@ -65,7 +64,7 @@
             ></v-switch>
             夜间模式
           </v-toolbar>
-          <v-card-text class="white--text">
+          <v-card-text class="white--text" v-ripple>
             {{ new Date().getFullYear() }} — <strong>rankofmatrix.com</strong>
           </v-card-text>
         </v-card>
