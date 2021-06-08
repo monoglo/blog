@@ -83,6 +83,7 @@
 
 <script>
 import MessageBar from '@/components/MessageBar.vue'
+import * as moment from 'moment'
 export default {
   name: 'ScrollBackToTopButton',
   components: {
@@ -144,6 +145,7 @@ export default {
       } else {
         this.$i18n.locale = 'zh-CN'
       }
+      moment.locale(this.$i18n.locale)
     }
   }
 }

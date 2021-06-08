@@ -96,7 +96,6 @@
 <script>
 import ArticleCard from '@/components/ArticleCard.vue'
 import * as moment from 'moment'
-moment.locale('zh-cn')
 
 export default {
   name: 'ArticleList',
@@ -140,6 +139,7 @@ export default {
     this.getArticleAmount()
     this.getArticleList()
     this.getTags()
+    moment.locale(this.$i18n.locale)
   },
   methods: {
     getArticleAmount() {

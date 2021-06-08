@@ -166,7 +166,6 @@ import MessageBar from '@/components/MessageBar.vue'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import * as moment from 'moment'
-moment.locale('zh-cn')
 
 export default {
   name: 'ArticlePage',
@@ -197,6 +196,7 @@ export default {
     this.getArticleInfo()
     this.getArticleTags()
     this.$vuetify.goTo(0)
+    moment.locale(this.$i18n.locale)
   },
   destroyed() {
     document.title = 'blog'
