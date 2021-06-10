@@ -14,7 +14,7 @@
                     <v-app-bar
                       flat
                       color="rgba(0, 0, 0, 0)"
-                      @click.stop="openNewTab(article.backgroundImageUrl)"
+                      @click.stop="openNewTab(article.backgroundImageUrl, $event)"
                       class="mt-2"
                       v-bind="attrs"
                       v-on="on"
@@ -270,8 +270,10 @@ export default {
         this.messageBar = false
       }, timeout)
     },
-    openNewTab(url) {
-      window.open(url, '_blank')
+    openNewTab(url, event) {
+      if (event.target === event.currentTarget) {
+        window.open(url, '_blank')
+      }
     }
   }
 }
@@ -295,5 +297,8 @@ p {
 .v-parallax__image {
   width: 100%;
   bottom: 313px;
+}
+.v-toolbar__content {
+  cursor: auto;
 }
 </style>

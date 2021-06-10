@@ -47,4 +47,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.theme--light.v-card {
+  background-color: #F0F8FF
+}
+</style>
