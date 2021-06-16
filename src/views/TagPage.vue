@@ -8,7 +8,7 @@
               height="200"
               src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
             >
-              <v-app-bar flat color="rgba(0, 0, 0, 0)">
+              <v-app-bar flat color="rgba(0, 0, 0, 0)" class="mt-2">
                 <v-btn icon @click.stop="$router.go(-1)" color="white">
                   <v-icon>mdi-arrow-left</v-icon>
                 </v-btn>
@@ -41,7 +41,7 @@
               </v-app-bar>
 
               <v-card-title>
-                <p class="ml-3 font-weight-medium text-h4 white--text">
+                <p class="ml-3 mt-2 font-weight-medium text-h4 white--text">
                   {{ $t('tag.tag') }}: {{ tag.tagName }}
                 </p>
                 <v-chip
@@ -60,7 +60,6 @@
             </v-parallax>
             <v-divider></v-divider>
             <v-card-text>
-              <v-divider></v-divider>
               <template v-if="loading">
                 <v-skeleton-loader
                   class="my-2"
