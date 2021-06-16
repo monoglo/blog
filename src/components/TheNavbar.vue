@@ -32,19 +32,19 @@
           <v-list-item-icon>
             <v-icon>mdi-layers-triple</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>首页</v-list-item-title>
+          <v-list-item-title>{{ $t('navigator.home') }}</v-list-item-title>
         </v-list-item>
         <v-list-item link @click.stop="$router.push({ path: '/tag' })">
           <v-list-item-icon>
             <v-icon>mdi-tag-multiple</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>标签</v-list-item-title>
+          <v-list-item-title>{{ $t('navigator.tag') }}</v-list-item-title>
         </v-list-item>
         <v-list-item link @click.stop="$router.push({ path: '/article/19' })">
           <v-list-item-icon>
             <v-icon>mdi-information-variant</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>关于</v-list-item-title>
+          <v-list-item-title>{{ $t('navigator.about') }}</v-list-item-title>
         </v-list-item>
       </v-list>
       <v-footer fixed padless>
@@ -62,7 +62,7 @@
               color="dark"
               class="ml-12"
             ></v-switch>
-            夜间模式
+            {{ $t('navigator.dark-mode') }}
           </v-toolbar>
           <v-card-text class="white--text" v-ripple>
             {{ new Date().getFullYear() }} — <strong>rankofmatrix.com</strong>

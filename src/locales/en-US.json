@@ -1,6 +1,25 @@
 {
     "message": "hello i18n !!",
     "blog": {
-        "name": "Epic Human Union"
+        "name": "rankOfMatrix"
+    },
+    "navigator": {
+        "home": "Home",
+        "tag": "Tag",
+        "about": "About",
+        "dark-mode": "Dark Mode"
+    },
+    "article": {
+        "readed": "readed",
+        "last-edit-at": "last edited at",
+        "create-at": "created at",
+        "modify": "Modify",
+        "hide": "Hide"
+    },
+    "tag": {
+        "list": "Tag List",
+        "add": "Create Tag",
+        "tag": "Tag",
+        "delete": "Delete"
     }
 }

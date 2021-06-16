@@ -34,7 +34,7 @@
                       <v-list-item-icon
                         ><v-icon>mdi-tag-plus</v-icon></v-list-item-icon
                       >
-                      <v-list-item-content>添加标签</v-list-item-content>
+                      <v-list-item-content>{{ $t('tag.add') }}</v-list-item-content>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -42,7 +42,7 @@
 
               <v-card-title>
                 <p class="ml-3 font-weight-medium text-h4 white--text">
-                  标签列表
+                  {{ $t('tag.list') }}
                 </p>
               </v-card-title>
             </v-parallax>

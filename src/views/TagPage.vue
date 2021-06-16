@@ -34,7 +34,7 @@
                       <v-list-item-icon
                         ><v-icon>mdi-tag-off</v-icon></v-list-item-icon
                       >
-                      <v-list-item-content>删除标签</v-list-item-content>
+                      <v-list-item-content>{{ $t('tag.delete') }}</v-list-item-content>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -42,7 +42,7 @@
 
               <v-card-title>
                 <p class="ml-3 font-weight-medium text-h4 white--text">
-                  标签: {{ tag.tagName }}
+                  {{ $t('tag.tag') }}: {{ tag.tagName }}
                 </p>
                 <v-chip
                   class="ml-3 mb-3"

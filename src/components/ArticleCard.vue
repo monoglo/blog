@@ -24,8 +24,8 @@
     </v-tooltip>
 
     <v-card-subtitle>
-      {{ article.authorName }} {{ '&nbsp;|&nbsp;' }} 阅读
-      {{ article.clickAmount }} {{ '&nbsp;|&nbsp;' }}
+      {{ article.authorName }} {{ '&nbsp;|&nbsp;' }}
+      {{ article.clickAmount }} {{ $t('article.readed') }} {{ '&nbsp;|&nbsp;' }}
       {{ moment.utc(article.createTime).fromNow() }}
     </v-card-subtitle>
 

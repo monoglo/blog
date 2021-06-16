@@ -51,7 +51,7 @@
                                   >mdi-file-document-edit</v-icon
                                 ></v-list-item-icon
                               >
-                              <v-list-item-content>修改</v-list-item-content>
+                              <v-list-item-content>{{ $t('article.modify') }}</v-list-item-content>
                             </v-list-item>
                             <v-list-item
                               dese
@@ -61,7 +61,7 @@
                               <v-list-item-icon
                                 ><v-icon>mdi-eye-off</v-icon></v-list-item-icon
                               >
-                              <v-list-item-content>隐藏</v-list-item-content>
+                              <v-list-item-content>{{ $t('article.hide') }}</v-list-item-content>
                             </v-list-item>
                           </v-list>
                         </v-card>
@@ -85,8 +85,8 @@
             </v-responsive>
 
             <v-card-subtitle>
-              上次编辑于 {{ moment.utc(article.lastEditTime).fromNow() }} |
-              创建于{{
+              {{ $t('article.last-edit-at') }} {{ moment.utc(article.lastEditTime).fromNow() }} |
+              {{ $t('article.create-at') }} {{
                 moment
                   .utc(article.createTime)
                   .local()
