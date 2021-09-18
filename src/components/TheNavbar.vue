@@ -103,9 +103,11 @@ export default {
     searchBar: ''
   }),
   mounted() {
+    const hour = new Date().getHours()
     if (
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
+      hour >= 16 ||
+      (window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
     ) {
       this.$vuetify.theme.dark = true
     }

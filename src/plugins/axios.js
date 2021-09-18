@@ -8,7 +8,7 @@ import axios from 'axios'
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 const config = {
-  baseURL: 'http://localhost:8081'
+  baseURL: process.env.NODE_ENV === 'production' ? 'https://blog.rankofmatrix.com' : 'http://localhost:8081'
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
 }

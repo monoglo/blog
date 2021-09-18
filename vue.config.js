@@ -21,7 +21,7 @@ module.exports = {
     historyApiFallback: true,
     proxy: {
       '/api': {
-        target: 'http://blog.rankofmatrix.com',
+        target: 'https://blog.rankofmatrix.com',
         pathRewrite: { '^/api': '/api' },
         changeOrigin: true
         // },

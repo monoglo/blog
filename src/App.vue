@@ -35,14 +35,10 @@ export default {
   },
 
   mounted() {
-    this.fastLogin()
     this.getLang()
   },
 
   methods: {
-    fastLogin() {
-      this.$store.dispatch('fastLogin')
-    },
     getLang() {
       console.info(navigator.language)
       this.$i18n.locale = navigator.language

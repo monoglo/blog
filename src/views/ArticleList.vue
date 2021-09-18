@@ -73,6 +73,7 @@
               <template v-else>
                 <v-btn
                   v-for="tag in tags"
+                  v-show="tag.articleAmount > 0"
                   v-bind:key="tag.tagId"
                   class="mt-2 mr-2 white--text"
                   :color="tag.tagColor"
@@ -169,6 +170,7 @@ export default {
         // console.info(response.data)
         if (response.data.code === 200) {
           this.tags = response.data.data
+          this.tags.sort((a, b) => { return a.tagName.length - b.tagName.length })
           // console.info(this.tags)
           this.tagLoading = false
         }

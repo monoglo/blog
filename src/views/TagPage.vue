@@ -118,7 +118,7 @@ export default {
         })
     },
     getArticlesByTag() {
-      this.$axios.get('api/articles/tag/' + this.tag.tagName).then(response => {
+      this.$axios.get('api/articles/tagId/' + this.tag.tagId).then(response => {
         console.info(response.data.data)
         this.article_list = response.data.data
         this.loading = false
