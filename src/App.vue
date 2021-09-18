@@ -40,7 +40,7 @@ export default {
 
   methods: {
     getLang() {
-      console.info(navigator.language)
+      // console.info(navigator.language)
       this.$i18n.locale = navigator.language
     }
   }

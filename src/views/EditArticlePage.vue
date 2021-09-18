@@ -168,14 +168,14 @@ export default {
           backgroundImageCopyright: this.backgroundImageCopyright
         })
         .then(response => {
-          console.info(response.data.data.aid)
+          // console.info(response.data.data.aid)
           this.$axios
             .put(
               'api/articles/aid/' + this.$route.params.aid + '/add/tags',
               this.selectedTags()
             )
             .then(response => {
-              console.info(response)
+              // console.info(response)
               if (response.data.code === 200) {
                 this.showMessageBar('修改成功', 2000)
               }
@@ -209,7 +209,7 @@ export default {
                 tags.forEach(tag => {
                   tag.selected = false
                 })
-                console.info(tags)
+                // console.info(tags)
                 this.$axios
                   .get('api/tags/aid/' + this.$route.params.aid)
                   .then(response => {

@@ -119,7 +119,7 @@ export default {
     },
     getArticlesByTag() {
       this.$axios.get('api/articles/tagId/' + this.tag.tagId).then(response => {
-        console.info(response.data.data)
+        // console.info(response.data.data)
         this.article_list = response.data.data
         this.loading = false
       })
@@ -128,7 +128,7 @@ export default {
       this.$axios
         .delete('api/tags/id/' + this.$route.params.tagId)
         .then(response => {
-          console.info(response.data.data)
+          // console.info(response.data.data)
           this.showMessageBar('删除成功', 2000)
         })
     },

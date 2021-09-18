@@ -247,7 +247,7 @@ export default {
         .delete('api/articles/aid/' + this.$route.params.aid)
         .then(response => {
           // console.info(response.data.data)
-          console.info(response.data.code)
+          // console.info(response.data.code)
           if (response.data.code === 200) {
             this.showMessageBar('删除成功', 2000)
           }
