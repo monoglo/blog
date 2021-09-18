@@ -11,6 +11,7 @@
               ? article.backgroundImageUrl
               : 'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'
           "
+          gradient="to bottom, rgba(0,0,0,0), rgba(46, 49, 49, 0.4)"
           v-ripple
           v-bind="attrs"
           v-on="on"
