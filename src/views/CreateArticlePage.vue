@@ -167,7 +167,7 @@ export default {
   },
   methods: {
     getBingImageOfTheDay() {
-      this.$axios.get('https://api.no0a.cn/api/bing/0').then(response => {
+      this.$axios.get('https://api.no0a.cn/api/bing/0', { withCredentials: false }).then(response => {
         this.backgroundImageUrl = response.data.bing.url
         this.backgroundImageCopyright = response.data.bing.copyright
       })

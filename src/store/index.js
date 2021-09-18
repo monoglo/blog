@@ -21,14 +21,16 @@ export default new Vuex.Store({
   },
   actions: {
     logout({ commit }) {
-      Vue.axios.get('api/logout').then(response => {
+      Vue.axios.get('api/users/logout').then(response => {
         commit('logout')
       })
     },
     fastLogin({ commit }) {
       Vue.axios.get('api/users/login/fast')
         .then(response => {
-          commit('login', response.data.data)
+          if (response.data.code === 200) {
+            commit('login', response.data.data)
+          }
         }).catch(() => { })
     }
   }

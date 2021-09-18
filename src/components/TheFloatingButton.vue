@@ -116,7 +116,7 @@ export default {
       const userForm = new FormData()
       userForm.append('username', this.loginInfo.email)
       userForm.append('password', this.loginInfo.password)
-      this.$axios.post('api/login', userForm).then(response => {
+      this.$axios.post('api/users/login', userForm).then(response => {
         if (response.data.code === 200) {
           this.$store.commit('login', response.data.data)
           this.loginLoading = false

@@ -199,7 +199,7 @@ export default {
     moment.locale(this.$i18n.locale)
   },
   destroyed() {
-    document.title = 'blog'
+    document.title = this.$t('blog.name')
   },
   watch: {
     '$route.params.aid': function(val, oldVal) {
@@ -221,7 +221,7 @@ export default {
             this.article.backgroundImageUrl =
               'https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg'
           }
-          document.title = this.article.title
+          document.title = this.article.title + ' | ' + this.$t('blog.name')
           // console.info(this.readTime * 60000)
           setTimeout(this.read, this.readTime * 60000)
           this.articleLoading = false

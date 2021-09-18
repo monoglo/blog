@@ -140,6 +140,7 @@ export default {
     this.getArticleList()
     this.getTags()
     moment.locale(this.$i18n.locale)
+    document.title = this.$t('blog.name')
   },
   methods: {
     getArticleAmount() {

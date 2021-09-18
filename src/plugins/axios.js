@@ -15,6 +15,8 @@ const config = {
 
 const _axios = axios.create(config)
 
+_axios.defaults.withCredentials = true
+
 _axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
